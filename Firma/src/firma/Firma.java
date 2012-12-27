@@ -14,6 +14,6 @@ public class Firma {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int a= 0;
+        //pozdro dla Karoliny xd Xp x;PPpxpx;axpa
     }
 }
