@@ -39,6 +39,16 @@ public class MyDB {
         listaProdukty.add(newP);
     }
     
+    public Produkt getProdukt(int id) {
+        for (Produkt p : listaProdukty) {
+            if (p.getID()==id) {
+                return p;
+            }
+        }
+        
+        return null;
+    }
+    
     public ArrayList<Produkt> getProdukty() {
         return listaProdukty;
     }

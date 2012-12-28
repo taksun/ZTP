@@ -25,6 +25,10 @@ public class Produkt {
         vat = v;
     }
     
+    public int getID() {
+        return produktID;
+    }
+    
     public String getOpis() {
         return "ID produktu: " + produktID + "\n" + nazwa + "\nCena: " + cena + "\nCena w euro: " + cena_euro + "\nIlość: " + ilosc + "\nStawka VAT: " + vat + "\n\n";
     }

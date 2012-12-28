@@ -30,8 +30,12 @@ public class Firma {
         
         ArrayList<Produkt> lista = baza.getProdukty();
         
+        System.out.println("Wszystkie produkty:");
         for (Produkt item : lista) {
             System.out.print(item.getOpis());
         }
+        
+        System.out.println("Wybrany produkt nr 2:");
+        System.out.print(baza.getProdukt(2).getOpis());
     }
 }
