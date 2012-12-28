@@ -10,11 +10,11 @@ package firma;
  */
 public class Kategoria {
     
-    private int produktID;
+    private int kategoriaID;
     private String nazwa;
     
     public Kategoria(int kID,String n) {
-        produktID = kID;
+        kategoriaID = kID;
         nazwa = n;
     }
     //nie wiem jakie powinna ta klassa miec funkcje.. wyświetlanie wszystkich kategorii? czy co?
