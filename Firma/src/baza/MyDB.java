@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author taksun
  */
-public class MyDB {
+public class MyDB implements Interface {
     private static MyDB singleton;
     
     private ArrayList<Produkt> listaProdukty = new ArrayList<>();
