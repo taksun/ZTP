@@ -17,5 +17,12 @@ public class Kategoria {
         kategoriaID = kID;
         nazwa = n;
     }
-    //nie wiem jakie powinna ta klassa miec funkcje.. wyświetlanie wszystkich kategorii? czy co?
+    
+    public int getID() {
+        return kategoriaID;
+    }
+    
+    public void setNazwa(String n) {
+        nazwa = n;
+    }
 }
