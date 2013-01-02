@@ -4,6 +4,8 @@
  */
 package firma;
 
+import baza.MyDB;
+import baza.Produkt;
 import java.util.ArrayList;
 
 /**
