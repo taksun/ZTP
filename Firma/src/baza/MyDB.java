@@ -13,6 +13,9 @@ import java.util.ArrayList;
 public class MyDB implements Interface {
     private static MyDB singleton;
     
+    private int nextKategoriaID = 1;
+    private int nextProduktID = 1;
+    
     private ArrayList<Produkt> listaProdukty = new ArrayList<>();
     private ArrayList<Kategoria> listaKategorie = new ArrayList<>();
     
@@ -27,7 +30,9 @@ public class MyDB implements Interface {
         return singleton;
     }
     
-    public void addProdukt(Produkt p) {
+    public void addProdukt(String nazwa, int kategoria, int ilosc, float cena, float cena_euro, float vat) {
+        Produkt p = new Produkt(nextProduktID,nazwa,kategoria,cena,cena_euro,ilosc,vat);
+        nextProduktID++;
         listaProdukty.add(p);
     }
     
@@ -64,7 +69,8 @@ public class MyDB implements Interface {
     }
     
     public void addKategoria(String nazwa) {
-        int kategoriaID = 0; // jakos auto increment
+        int kategoriaID = nextKategoriaID;
+        nextKategoriaID++;
         listaKategorie.add(new Kategoria(kategoriaID,nazwa));
     }
     

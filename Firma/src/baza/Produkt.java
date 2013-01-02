@@ -17,7 +17,7 @@ public class Produkt {
     private String nazwa;
     private float vat;
     
-    public Produkt(int pID, int kID, float c, float ce, int i, String n, float v) {
+    public Produkt(int pID, String n, int kID, float c, float ce, int i, float v) {
         produktID = pID;
         kategoriaID = kID;
         cena = c;
