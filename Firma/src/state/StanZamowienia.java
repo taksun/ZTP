@@ -21,7 +21,7 @@ public class StanZamowienia extends Stan {
         
         FlowLayout experimentLayout = new FlowLayout();
         p.setLayout(experimentLayout);
-        experimentLayout.setAlignment(FlowLayout.TRAILING);
+        experimentLayout.setAlignment(FlowLayout.LEADING);
         
         //Add buttons to the experiment layout
         p.add(new JButton("A"));

@@ -34,4 +34,10 @@ public class Produkt {
     public void setNazwa(String n) {
         nazwa = n;
     }
+    
+    public Object[] toTable() {
+        MyDB baza = MyDB.getInstance();
+        Object[] tab = {produktID, nazwa, baza.getKategoria(kategoriaID), ilosc, cena, vat};
+        return tab;
+    }
 }

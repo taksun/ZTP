@@ -25,4 +25,8 @@ public class Kategoria {
     public void setNazwa(String n) {
         nazwa = n;
     }
+    
+    public String getNazwa() {
+        return nazwa;
+    }
 }
