@@ -13,12 +13,16 @@ import java.util.ArrayList;
 public class MyDB implements Interface {
 
     private static MyDB singleton;
+    
     private int nextKategoriaID = 1;
     private int nextProduktID = 1;
     private int nextKlientID = 1;
+    private int nextZamowienieID = 1;
+    
     private ArrayList<Produkt> listaProdukty = new ArrayList<>();
     private ArrayList<Kategoria> listaKategorie = new ArrayList<>();
     private ArrayList<Klient> listaKlienci = new ArrayList<>();
+    private ArrayList<Zamowienie> listaZamowienia = new ArrayList<>();
 
     protected MyDB() {
     }
@@ -142,5 +146,45 @@ public class MyDB implements Interface {
 
     public ArrayList<Klient> getKlienci() {
         return listaKlienci;
+    }
+    
+    public void addZamowienie(ArrayList<Produkt> produkty, Klient klient) {
+        Zamowienie z = new Zamowienie(nextZamowienieID, "Nowe", produkty, klient);
+        nextZamowienieID++;
+        listaZamowienia.add(z);
+    }
+    
+    public void editZamowienieStatus(int id, String status) {
+        for (Zamowienie z : listaZamowienia) {
+            if (z.getID() == id) {
+                z.setStatus(status);
+
+                break;
+            }
+        }
+    }
+    
+    public void removeZamowienie(int id) {
+        for (Zamowienie z : listaZamowienia) {
+            if (z.getID() == id) {
+                listaZamowienia.remove(z);
+
+                break;
+            }
+        }
+    }
+      
+    public Zamowienie getZamowienie(int id) {
+        for (Zamowienie z : listaZamowienia) {
+            if (z.getID() == id) {
+                return z;
+            }
+        }
+
+        return null;
+    }
+    
+    public ArrayList<Zamowienie> getZamowienia() {
+        return listaZamowienia;
     }
 }
