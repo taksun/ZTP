@@ -42,12 +42,6 @@ public class MyDB implements Interface {
 
     public void removeProdukt(int id) {
         listaProdukty.remove(id);
-        /*for (Produkt p : listaProdukty) {
-            if (p.getID() == id) {
-                listaProdukty.remove(p);
-                break;
-            }
-        }*/
     }
 
     public void editProdukt(int id, String nazwa) {
@@ -67,6 +61,10 @@ public class MyDB implements Interface {
         }
 
         return null;
+    }
+    
+    public Object[] getLastProdukt() {
+        return listaProdukty.get(listaProdukty.size()-1).toTable();
     }
 
     public Object[][] getProdukty() {
@@ -103,15 +101,19 @@ public class MyDB implements Interface {
             }
         }
     }
-
-    public String getKategoria(int id) {
+    
+    public String getKategoriaByID(int id) {
         for (Kategoria k : listaKategorie) {
             if (k.getID() == id) {
                 return k.getNazwa();
             }
         }
 
-        return "";
+        return null;
+    }
+
+    public int getKategoria(int id) {
+        return listaKategorie.get(id).getID();
     }
 
     public ArrayList<Kategoria> getKategorie() {

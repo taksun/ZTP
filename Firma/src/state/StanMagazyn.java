@@ -19,6 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import okienka.DodajProduktOkno;
 
 /**
  *
@@ -34,11 +35,6 @@ public class StanMagazyn extends Stan {
     public void setPanel(JPanel p) {
 
         panel = p;
-
-        baza.addProdukt("asd", 1, 100, 100F, 400F, 0.23F);
-        baza.addProdukt("asd2", 1, 100, 100F, 400F, 0.23F);
-        baza.addProdukt("asd3", 1, 100, 100F, 400F, 0.23F);
-        baza.addKategoria("Kategoria1");
 
         p.removeAll();
 
@@ -94,20 +90,57 @@ public class StanMagazyn extends Stan {
         //Add the scroll pane to this panel.
         p.add(scrollPane);
 
-        
+
         JButton btnAdd = new JButton("Dodaj");
+
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //
+
+                DodajProduktOkno okno = new DodajProduktOkno();
+                okno.setLocationRelativeTo(panel);
+                okno.setVisible(true);
+
+                if (okno.dodane) {
+                    baza.addProdukt(okno.nazwa.getText(),
+                            baza.getKategoria(okno.kategoria.getSelectedIndex()),
+                            Integer.parseInt(okno.ilosc.getText()),
+                            Float.parseFloat(okno.cena.getText()),
+                            Float.parseFloat(okno.cena.getText()) * 4,
+                            Float.parseFloat((String) okno.vat.getSelectedItem()) / 100);
+                    model.addRow(baza.getLastProdukt());
+                }
             }
         });
+
         p.add(btnAdd);
 
+        JButton btnEdit = new JButton("Edytuj");
+
+        btnEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedRow < 0) {
+                    return;
+                }
+
+                
+            }
+        });
+
+        p.add(btnEdit);
+        
         JButton btnDel = new JButton("Usuń");
+
         btnDel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if (selectedRow < 0) {
+                    return;
+                }
+
                 int n = JOptionPane.showConfirmDialog(
                         panel.getParent(),
                         "Czy na pewno usunąć produkt?",
@@ -120,6 +153,7 @@ public class StanMagazyn extends Stan {
                 }
             }
         });
+
         p.add(btnDel);
 
         //Left to right component orientation is selected by default

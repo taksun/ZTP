@@ -29,4 +29,9 @@ public class Kategoria {
     public String getNazwa() {
         return nazwa;
     }
+    
+    @Override
+    public String toString() {
+        return nazwa;
+    }
 }

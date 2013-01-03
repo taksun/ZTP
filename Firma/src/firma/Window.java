@@ -4,6 +4,7 @@
  */
 package firma;
 
+import baza.MyDB;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import state.Chain;
@@ -27,8 +28,16 @@ public class Window extends javax.swing.JFrame {
     public Window() {
         initComponents();
         
-        c.setPanel(panel);
+        MyDB baza = MyDB.getInstance();
+        baza.addProdukt("asd", 1, 100, 100F, 400F, 0.23F);
+        baza.addProdukt("asd2", 1, 100, 100F, 400F, 0.23F);
+        baza.addProdukt("asd3", 1, 100, 100F, 400F, 0.23F);
+        baza.addKategoria("Kategoria1");
+        baza.addKategoria("Kategoria2");
+        baza.addKategoria("Kategoria3");
+             
         getContentPane().add(panel, BorderLayout.CENTER);
+        c.setPanel(panel);
     }
 
     /**
@@ -51,7 +60,6 @@ public class Window extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Firma");
-        setPreferredSize(new java.awt.Dimension(600, 300));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);

@@ -37,7 +37,7 @@ public class Produkt {
     
     public Object[] toTable() {
         MyDB baza = MyDB.getInstance();
-        Object[] tab = {produktID, nazwa, baza.getKategoria(kategoriaID), ilosc, cena, vat};
+        Object[] tab = {produktID, nazwa, baza.getKategoriaByID(kategoriaID), ilosc, cena, Integer.toString((int)(vat*100))+"%"};
         return tab;
     }
 }
