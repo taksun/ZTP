@@ -17,14 +17,14 @@ public class Zamowienie {
     private Date data;
     private String status;// nie wiem czy tak, bo w sumie chyba mozna inta i zrobic 0-niezrealizowane, 1-czeka,2-zrealizowane.. dokładnie nie wiem
     private ArrayList<Produkt> produkty = new ArrayList<>();
-    private Klient klient;
+    private int klientID;
 
-    public Zamowienie(int zID, String s, ArrayList<Produkt> p, Klient k) {
+    public Zamowienie(int zID, String s, ArrayList<Produkt> p, int k) {
         zamID = zID;
         data = new Date();
         status = s;
         produkty  = p;
-        klient = k;
+        klientID = k;
     }
     
     public int getID() {

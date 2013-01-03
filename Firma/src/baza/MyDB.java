@@ -148,8 +148,8 @@ public class MyDB implements Interface {
         return listaKlienci;
     }
     
-    public void addZamowienie(ArrayList<Produkt> produkty, Klient klient) {
-        Zamowienie z = new Zamowienie(nextZamowienieID, "Nowe", produkty, klient);
+    public void addZamowienie(ArrayList<Produkt> produkty, int klientID) {
+        Zamowienie z = new Zamowienie(nextZamowienieID, "Nowe", produkty, klientID);
         nextZamowienieID++;
         listaZamowienia.add(z);
     }
