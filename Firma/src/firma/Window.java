@@ -6,6 +6,13 @@ package firma;
 
 import baza.MyDB;
 import java.awt.BorderLayout;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.JPanel;
 import state.Chain;
 import state.StanFaktury;
@@ -21,13 +28,25 @@ public class Window extends javax.swing.JFrame {
 
     Chain c = new Chain();
     JPanel panel = new JPanel();
-    
+    Ustawienia ust = Ustawienia.getInstance();
+
     /**
      * Creates new form Window
      */
     public Window() {
         initComponents();
-        
+
+        ust.setKurs(4.0F);
+
+        try {
+            Memento m;
+            try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("ustawienia.bin")))) {
+                m = (Memento) ois.readObject();
+            }
+            ust.przywroc(m);
+        } catch (IOException | ClassNotFoundException exc) {
+        }
+
         MyDB baza = MyDB.getInstance();
         baza.addProdukt("asd", 1, 100, 100F, 400F, 0.23F);
         baza.addProdukt("asd2", 1, 100, 100F, 400F, 0.23F);
@@ -35,7 +54,7 @@ public class Window extends javax.swing.JFrame {
         baza.addKategoria("Kategoria1");
         baza.addKategoria("Kategoria2");
         baza.addKategoria("Kategoria3");
-             
+
         getContentPane().add(panel, BorderLayout.CENTER);
         c.setPanel(panel);
     }
@@ -60,6 +79,11 @@ public class Window extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Firma");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
@@ -139,7 +163,7 @@ public class Window extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         c.set_state(new StanFaktury());
-        c.setPanel(panel);       
+        c.setPanel(panel);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
@@ -164,6 +188,17 @@ public class Window extends javax.swing.JFrame {
         c.set_state(new StanUstawienia());
         c.setPanel(panel);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        Memento m = ust.stworzMemento();
+        try {
+            try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("ustawienia.bin")))) {
+                oos.writeObject(m);
+            }
+        } catch (Exception exc) {
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -194,6 +229,7 @@ public class Window extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Window().setVisible(true);
             }

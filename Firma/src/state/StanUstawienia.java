@@ -4,8 +4,12 @@
  */
 package state;
 
+import firma.Ustawienia;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -14,6 +18,8 @@ import javax.swing.JPanel;
  * @author taksun
  */
 public class StanUstawienia extends Stan {
+    Ustawienia ust = Ustawienia.getInstance();
+    
     @Override
     public void setPanel(JPanel p) {
         
@@ -23,17 +29,20 @@ public class StanUstawienia extends Stan {
         p.setLayout(experimentLayout);
         experimentLayout.setAlignment(FlowLayout.LEADING);
         
-        //Add buttons to the experiment layout
-        p.add(new JButton("U"));
-        p.add(new JButton("S"));
-        p.add(new JButton("T"));
-        p.add(new JButton("A"));
-        p.add(new JButton("W"));
-        p.add(new JButton("I"));
-        p.add(new JButton("E"));
-        p.add(new JButton("N"));
-        p.add(new JButton("I"));
-        p.add(new JButton("A"));
+        p.add(new Label("Kurs euro: " + Float.toString(ust.getKurs())));
+        
+        JButton btnEdit = new JButton("Edytuj");
+
+        btnEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {             
+                
+                
+                ust.setKurs(5.9F);
+            }
+        });
+
+        p.add(btnEdit);
         
         //Left to right component orientation is selected by default
         p.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);

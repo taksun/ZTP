@@ -24,7 +24,7 @@ public class MyDB implements Interface {
     private ArrayList<Klient> listaKlienci = new ArrayList<>();
     private ArrayList<Zamowienie> listaZamowienia = new ArrayList<>();
 
-    protected MyDB() {
+    private MyDB() {
     }
 
     public static MyDB getInstance() {
