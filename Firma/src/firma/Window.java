@@ -48,9 +48,9 @@ public class Window extends javax.swing.JFrame {
         }
 
         MyDB baza = MyDB.getInstance();
-        baza.addProdukt("asd", 1, 100, 100F, 400F, 0.23F);
-        baza.addProdukt("asd2", 1, 100, 100F, 400F, 0.23F);
-        baza.addProdukt("asd3", 1, 100, 100F, 400F, 0.23F);
+        baza.addProdukt("asd", 1, 100, 100F, 100F*ust.getKurs(), 0.23F);
+        baza.addProdukt("asd2", 1, 100, 100F, 100F*ust.getKurs(), 0.23F);
+        baza.addProdukt("asd3", 1, 100, 100F, 100F*ust.getKurs(), 0.23F);
         baza.addKategoria("Kategoria1");
         baza.addKategoria("Kategoria2");
         baza.addKategoria("Kategoria3");

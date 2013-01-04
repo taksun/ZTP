@@ -8,7 +8,6 @@ import baza.MyDB;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -90,7 +89,7 @@ public class DodajProduktOkno extends JDialog {
                 }
 
                 try {
-                    Integer.parseInt(ilosc.getText());
+                    int l = Integer.parseInt(ilosc.getText());
                 } catch (Exception exc) {
                     JOptionPane.showMessageDialog(okno, "Podana ilość nie jest liczbą", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
@@ -100,7 +99,11 @@ public class DodajProduktOkno extends JDialog {
                     String text = cena.getText();
                     text = text.replace(',', '.');
                     cena.setText(text);
-                    Float.parseFloat(cena.getText());
+                    Float c = Float.parseFloat(cena.getText());
+                    c = c * 100;
+                    c = (float)Math.round(c);
+                    c = c / 100;
+                    cena.setText(Float.toString(c));
                 } catch (Exception exc) {
                     JOptionPane.showMessageDialog(okno, "Podana cena nie jest liczbą", "Błędna cena", JOptionPane.WARNING_MESSAGE);
                     return;

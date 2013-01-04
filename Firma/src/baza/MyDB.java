@@ -76,6 +76,10 @@ public class MyDB implements Interface {
         
         return data;
     }
+    
+    public ArrayList<Produkt> getProduktyList() {        
+        return listaProdukty;
+    }
 
     public void addKategoria(String nazwa) {
         int kategoriaID = nextKategoriaID;

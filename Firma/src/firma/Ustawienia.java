@@ -12,6 +12,7 @@ public class Ustawienia {
 
     private float kurs_euro;
     private static Ustawienia singleton;
+    private Observer obs = new Observer(this);
 
     private Ustawienia() {
     }
@@ -28,15 +29,21 @@ public class Ustawienia {
     }
 
     public void przywroc(Memento m) {
-        kurs_euro = ((MementoUstawien)m).getKurs();
+        kurs_euro = ((MementoUstawien) m).getKurs();
     }
 
     public void setKurs(float k) {
         kurs_euro = k;
+
+        notyfy();
     }
 
     public float getKurs() {
         return kurs_euro;
+    }
+    
+    private void notyfy() {
+        obs.update();
     }
 
     private static class MementoUstawien implements Memento {

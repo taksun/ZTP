@@ -5,6 +5,7 @@
 package state;
 
 import baza.MyDB;
+import firma.Ustawienia;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -47,7 +48,10 @@ public class StanMagazyn extends Stan {
             "Kategoria",
             "Ilość",
             "Cena",
-            "VAT"};
+            "Cena €",
+            "VAT",
+            "Cena z VAT",
+            "Cena € z VAT"};
 
         Object[][] data = baza.getProdukty();
 
@@ -102,11 +106,16 @@ public class StanMagazyn extends Stan {
                 okno.setVisible(true);
 
                 if (okno.dodane) {
+                    Ustawienia ust = Ustawienia.getInstance();
+                    float cenaE = Float.parseFloat(okno.cena.getText()) * ust.getKurs();
+                    cenaE = cenaE * 100;
+                    cenaE = Math.round(cenaE);
+                    cenaE = cenaE / 100;
                     baza.addProdukt(okno.nazwa.getText(),
                             baza.getKategoria(okno.kategoria.getSelectedIndex()),
                             Integer.parseInt(okno.ilosc.getText()),
                             Float.parseFloat(okno.cena.getText()),
-                            Float.parseFloat(okno.cena.getText()) * 4,
+                            cenaE,
                             Float.parseFloat((String) okno.vat.getSelectedItem()) / 100);
                     model.addRow(baza.getLastProdukt());
                 }
@@ -125,12 +134,12 @@ public class StanMagazyn extends Stan {
                     return;
                 }
 
-                
+
             }
         });
 
         p.add(btnEdit);
-        
+
         JButton btnDel = new JButton("Usuń");
 
         btnDel.addActionListener(new ActionListener() {
