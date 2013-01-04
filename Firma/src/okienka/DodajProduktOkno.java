@@ -100,7 +100,7 @@ public class DodajProduktOkno extends JDialog {
                     String text = cena.getText();
                     text = text.replace(',', '.');
                     cena.setText(text);
-                    cena.setText(cena.getText());
+                    Float.parseFloat(cena.getText());
                 } catch (Exception exc) {
                     JOptionPane.showMessageDialog(okno, "Podana cena nie jest liczbą", "Błędna cena", JOptionPane.WARNING_MESSAGE);
                     return;
