@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -131,6 +132,7 @@ public class StanMagazyn extends Stan {
             public void actionPerformed(ActionEvent e) {
 
                 if (selectedRow < 0) {
+                    JOptionPane.showMessageDialog(panel, "Nie wybraleś produktu!", "Brak wybranego produktu", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -139,6 +141,90 @@ public class StanMagazyn extends Stan {
         });
 
         pBot.add(btnEdit);
+        
+        JButton btnDodaj = new JButton("Dodaj ilość");
+
+        btnDodaj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedRow < 0) {
+                    JOptionPane.showMessageDialog(panel, "Nie wybraleś produktu!", "Brak wybranego produktu", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                String s = (String)JOptionPane.showInputDialog(
+                    panel,
+                    "Podaj ilośc produktu jaką dodać",
+                    "Dodanie ilości",
+                    JOptionPane.PLAIN_MESSAGE);
+                int ile = 0;
+                try {
+                    ile = Integer.parseInt(s);
+                } catch(Exception exc) {
+                    JOptionPane.showMessageDialog(panel, "Podana ilość nie jest liczbą", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                if (ile < 1) {
+                    JOptionPane.showMessageDialog(panel, "Podana ilość musi być większa od 0", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                ile += baza.getProduktIlosc(selectedRow);
+                
+                baza.setProduktIlosc(selectedRow, ile);
+                
+                model.setValueAt(ile, selectedRow, 3);
+            }
+        });
+
+        pBot.add(btnDodaj);
+        
+        JButton btnOdejmij = new JButton("Odejmij ilość");
+
+        btnOdejmij.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedRow < 0) {
+                    JOptionPane.showMessageDialog(panel, "Nie wybraleś produktu!", "Brak wybranego produktu", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                String s = (String)JOptionPane.showInputDialog(
+                    panel,
+                    "Podaj ilośc produktu jaką dodać",
+                    "Dodanie ilości",
+                    JOptionPane.PLAIN_MESSAGE);
+                int ile = 0;
+                try {
+                    ile = Integer.parseInt(s);
+                } catch(Exception exc) {
+                    JOptionPane.showMessageDialog(panel, "Podana ilość nie jest liczbą", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                if (ile < 1) {
+                    JOptionPane.showMessageDialog(panel, "Podana ilość musi być większa od 0", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                int old = baza.getProduktIlosc(selectedRow);
+                
+                if (old < ile) {
+                    JOptionPane.showMessageDialog(panel, "Podana ilość nie może być większa od aktualnej ilości", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                ile = old - ile;
+                
+                baza.setProduktIlosc(selectedRow, ile);
+                
+                model.setValueAt(ile, selectedRow, 3);
+            }
+        });
+
+        pBot.add(btnOdejmij);
 
         JButton btnDel = new JButton("Usuń");
 
@@ -147,6 +233,7 @@ public class StanMagazyn extends Stan {
             public void actionPerformed(ActionEvent e) {
 
                 if (selectedRow < 0) {
+                    JOptionPane.showMessageDialog(panel, "Nie wybraleś produktu!", "Brak wybranego produktu", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 

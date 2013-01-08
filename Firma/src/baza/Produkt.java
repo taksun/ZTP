@@ -43,6 +43,14 @@ public class Produkt {
     public void setCenaEuro(float c) {
         cena_euro = c;
     }
+    
+    public int getIlosc() {
+        return ilosc;
+    }
+    
+    public void setIlosc(int il) {
+        ilosc = il;
+    }
 
     public Object[] toTable() {
         MyDB baza = MyDB.getInstance();
