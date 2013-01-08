@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 /**
  *
@@ -42,28 +43,40 @@ public class DodajProduktOkno extends JDialog {
         setModal(true);
         setSize(200, 250);
 
-        JPanel panel = new JPanel();
+        SpringLayout layout = new SpringLayout();
+        
+        JPanel panel = new JPanel(layout);
 
+        JLabel l = new JLabel("Nazwa", JLabel.TRAILING);
         nazwa = new JTextField(10);
-        panel.add(new JLabel("Nazwa"));
+        l.setLabelFor(nazwa);
+        panel.add(l);
         panel.add(nazwa);
 
+        l = new JLabel("Kategoria", JLabel.TRAILING);
         kategoria = new JComboBox<>(baza.getKategorie().toArray());
-        panel.add(new JLabel("Kategoria"));
+        l.setLabelFor(kategoria);
+        panel.add(l);
         panel.add(kategoria);
 
+        l = new JLabel("Ilość", JLabel.TRAILING);
         ilosc = new JTextField(10);
-        panel.add(new JLabel("Ilość"));
+        l.setLabelFor(ilosc);
+        panel.add(l);
         panel.add(ilosc);
 
+        l = new JLabel("Cena", JLabel.TRAILING);
         cena = new JTextField(10);
-        panel.add(new JLabel("Cena"));
+        l.setLabelFor(cena);
+        panel.add(l);
         panel.add(cena);
 
         String[] vatT = {"23", "7", "5", "3"};
 
+        l = new JLabel("VAT", JLabel.TRAILING);
         vat = new JComboBox<>(vatT);
-        panel.add(new JLabel("VAT"));
+        l.setLabelFor(vat);
+        panel.add(l);
         panel.add(vat);
 
         JButton dodaj = new JButton("Dodaj");
@@ -123,6 +136,13 @@ public class DodajProduktOkno extends JDialog {
 
         panel.add(dodaj);
         panel.add(anuluj);
+        
+        
+        
+        SpringUtilities.makeCompactGrid(panel,
+                                6, 2, //rows, cols
+                                6, 6,        //initX, initY
+                                6, 6);       //xPad, yPad
 
         getContentPane().add(BorderLayout.CENTER, panel);
     }

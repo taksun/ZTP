@@ -6,6 +6,7 @@ package state;
 
 import baza.MyDB;
 import firma.Ustawienia;
+import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -39,9 +40,7 @@ public class StanMagazyn extends Stan {
 
         p.removeAll();
 
-        FlowLayout experimentLayout = new FlowLayout();
-        p.setLayout(experimentLayout);
-        experimentLayout.setAlignment(FlowLayout.LEADING);
+        p.setLayout(new BorderLayout());
 
         String[] col = {"ID",
             "Nazwa",
@@ -65,7 +64,7 @@ public class StanMagazyn extends Stan {
             }
         };
 
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        //table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -92,8 +91,9 @@ public class StanMagazyn extends Stan {
         JScrollPane scrollPane = new JScrollPane(table);
 
         //Add the scroll pane to this panel.
-        p.add(scrollPane);
+        p.add(scrollPane, BorderLayout.CENTER);
 
+        JPanel pBot = new JPanel();
 
         JButton btnAdd = new JButton("Dodaj");
 
@@ -122,7 +122,7 @@ public class StanMagazyn extends Stan {
             }
         });
 
-        p.add(btnAdd);
+        pBot.add(btnAdd);
 
         JButton btnEdit = new JButton("Edytuj");
 
@@ -138,7 +138,7 @@ public class StanMagazyn extends Stan {
             }
         });
 
-        p.add(btnEdit);
+        pBot.add(btnEdit);
 
         JButton btnDel = new JButton("Usuń");
 
@@ -163,10 +163,16 @@ public class StanMagazyn extends Stan {
             }
         });
 
-        p.add(btnDel);
+        pBot.add(btnDel);
+        
+        FlowLayout experimentLayout = new FlowLayout();
+        pBot.setLayout(experimentLayout);
+        experimentLayout.setAlignment(FlowLayout.LEADING);
 
         //Left to right component orientation is selected by default
-        p.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        pBot.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        
+        p.add(pBot, BorderLayout.PAGE_END);
 
         p.validate();
         p.repaint();
