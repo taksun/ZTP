@@ -56,6 +56,10 @@ public class MyDB implements Interface {
         return listaProdukty.get(listaProdukty.size()-1).toTable();
     }
 
+    public Produkt getProdukt(int id) {
+        return listaProdukty.get(id);
+    }
+    
     public Object[][] getProdukty() {
         Object [][] data = new Object[listaProdukty.size()][6];
         
@@ -95,14 +99,24 @@ public class MyDB implements Interface {
         }
     }
     
-    public String getKategoriaByID(int id) {
+    public Kategoria getKategoriaByID(int id) {
         for (Kategoria k : listaKategorie) {
             if (k.getID() == id) {
-                return k.getNazwa();
+                return k;
             }
         }
 
         return null;
+    }
+    
+    public int getKategoriaRowByID(int id) {
+        for (int i=0; i < listaKategorie.size(); i++) {
+            if (listaKategorie.get(i).getID() == id) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public int getKategoria(int id) {

@@ -35,9 +35,17 @@ public class Produkt {
     public void setNazwa(String n) {
         nazwa = n;
     }
+    
+    public String getNazwa() {
+        return nazwa;
+    }
 
     public float getCena() {
         return cena;
+    }
+    
+    public void setCena(float c) {
+        cena = c;
     }
 
     public void setCenaEuro(float c) {
@@ -51,6 +59,22 @@ public class Produkt {
     public void setIlosc(int il) {
         ilosc = il;
     }
+    
+    public int getKategoria() {
+        return kategoriaID;
+    }
+    
+    public void setKategoria(int k) {
+        kategoriaID = k;
+    }
+    
+    public float getVAT() {
+        return vat;
+    }
+    
+    public void setVAT(float v) {
+        vat = v;
+    }
 
     public Object[] toTable() {
         MyDB baza = MyDB.getInstance();
@@ -62,7 +86,7 @@ public class Produkt {
         cenaEV = cenaEV * 100;
         cenaEV = Math.round(cenaEV);
         cenaEV = cenaEV / 100;
-        Object[] tab = {produktID, nazwa, baza.getKategoriaByID(kategoriaID), ilosc, cena, cena_euro, Integer.toString((int) (vat * 100)) + "%", cenaV, cenaEV};
+        Object[] tab = {produktID, nazwa, baza.getKategoriaByID(kategoriaID).getNazwa(), ilosc, cena, cena_euro, Integer.toString((int) (vat * 100)) + "%", cenaV, cenaEV};
         return tab;
     }
 }

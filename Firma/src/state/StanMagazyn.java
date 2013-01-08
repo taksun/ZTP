@@ -5,14 +5,13 @@
 package state;
 
 import baza.MyDB;
+import baza.Produkt;
 import firma.Ustawienia;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -136,12 +135,83 @@ public class StanMagazyn extends Stan {
                     return;
                 }
 
+                Produkt p = baza.getProdukt(selectedRow);
 
+                DodajProduktOkno okno = new DodajProduktOkno();
+
+                okno.setTitle("Edytuj produkt nr: " + Integer.toString(p.getID()));
+                okno.dodaj.setText("Zapisz");
+                okno.nazwa.setText(p.getNazwa());
+                okno.ilosc.setText(Integer.toString(p.getIlosc()));
+                okno.cena.setText(Float.toString(p.getCena()));
+
+                int k = p.getKategoria();
+                okno.kategoria.setSelectedIndex(baza.getKategoriaRowByID(k));
+
+                float vat = p.getVAT();
+                int nrVat = 0;
+
+                if (vat == 0.07F) {
+                    nrVat = 1;
+                }
+
+                if (vat == 0.05F) {
+                    nrVat = 2;
+                }
+
+                if (vat == 0.03F) {
+                    nrVat = 3;
+                }
+
+                okno.vat.setSelectedIndex(nrVat);
+
+                okno.setLocationRelativeTo(panel);
+                okno.setVisible(true);
+
+                if (okno.dodane) {
+                    Ustawienia ust = Ustawienia.getInstance();
+                    float cenaE = Float.parseFloat(okno.cena.getText()) * ust.getKurs();
+                    cenaE = cenaE * 100;
+                    cenaE = Math.round(cenaE);
+                    cenaE = cenaE / 100;
+
+                    p.setCena(Float.parseFloat(okno.cena.getText()));
+                    model.setValueAt(p.getCena(), selectedRow, 4);
+                    p.setCenaEuro(cenaE);
+                    model.setValueAt(cenaE, selectedRow, 5);
+                    p.setIlosc(Integer.parseInt(okno.ilosc.getText()));
+                    model.setValueAt(p.getIlosc(), selectedRow, 3);
+                    p.setNazwa(okno.nazwa.getText());
+                    model.setValueAt(okno.nazwa.getText(), selectedRow, 1);
+                    p.setKategoria(baza.getKategoria(okno.kategoria.getSelectedIndex()));
+                    model.setValueAt(baza.getKategoriaByID(p.getKategoria()).getNazwa(), selectedRow, 2);
+                    p.setVAT(Float.parseFloat((String) okno.vat.getSelectedItem()) / 100);
+                    model.setValueAt(Integer.toString((int) (p.getVAT() * 100)) + "%", selectedRow, 6);
+                    float cenaV = p.getCena() * p.getVAT() + p.getCena();
+                    cenaV = cenaV * 100;
+                    cenaV = Math.round(cenaV);
+                    cenaV = cenaV / 100;
+                    float cenaEV = cenaE * p.getVAT() + cenaE;
+                    cenaEV = cenaEV * 100;
+                    cenaEV = Math.round(cenaEV);
+                    cenaEV = cenaEV / 100;
+                    model.setValueAt(cenaV, selectedRow, 7);
+                    model.setValueAt(cenaEV, selectedRow, 8);
+
+
+                    /*baza.addProdukt(okno.nazwa.getText(),
+                     baza.getKategoria(okno.kategoria.getSelectedIndex()),
+                     Integer.parseInt(okno.ilosc.getText()),
+                     Float.parseFloat(okno.cena.getText()),
+                     cenaE,
+                     Float.parseFloat((String) okno.vat.getSelectedItem()) / 100);
+                     model.addRow(baza.getLastProdukt());*/
+                }
             }
         });
 
         pBot.add(btnEdit);
-        
+
         JButton btnDodaj = new JButton("Dodaj ilość");
 
         btnDodaj.addActionListener(new ActionListener() {
@@ -153,15 +223,15 @@ public class StanMagazyn extends Stan {
                     return;
                 }
 
-                String s = (String)JOptionPane.showInputDialog(
-                    panel,
-                    "Podaj ilośc produktu jaką dodać",
-                    "Dodanie ilości",
-                    JOptionPane.PLAIN_MESSAGE);
+                String s = (String) JOptionPane.showInputDialog(
+                        panel,
+                        "Podaj ilośc produktu jaką dodać",
+                        "Dodanie ilości",
+                        JOptionPane.PLAIN_MESSAGE);
                 int ile = 0;
                 try {
                     ile = Integer.parseInt(s);
-                } catch(Exception exc) {
+                } catch (Exception exc) {
                     JOptionPane.showMessageDialog(panel, "Podana ilość nie jest liczbą", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
@@ -170,17 +240,17 @@ public class StanMagazyn extends Stan {
                     JOptionPane.showMessageDialog(panel, "Podana ilość musi być większa od 0", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                
+
                 ile += baza.getProduktIlosc(selectedRow);
-                
+
                 baza.setProduktIlosc(selectedRow, ile);
-                
+
                 model.setValueAt(ile, selectedRow, 3);
             }
         });
 
         pBot.add(btnDodaj);
-        
+
         JButton btnOdejmij = new JButton("Odejmij ilość");
 
         btnOdejmij.addActionListener(new ActionListener() {
@@ -192,15 +262,15 @@ public class StanMagazyn extends Stan {
                     return;
                 }
 
-                String s = (String)JOptionPane.showInputDialog(
-                    panel,
-                    "Podaj ilośc produktu jaką dodać",
-                    "Dodanie ilości",
-                    JOptionPane.PLAIN_MESSAGE);
+                String s = (String) JOptionPane.showInputDialog(
+                        panel,
+                        "Podaj ilośc produktu jaką dodać",
+                        "Dodanie ilości",
+                        JOptionPane.PLAIN_MESSAGE);
                 int ile = 0;
                 try {
                     ile = Integer.parseInt(s);
-                } catch(Exception exc) {
+                } catch (Exception exc) {
                     JOptionPane.showMessageDialog(panel, "Podana ilość nie jest liczbą", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
@@ -210,16 +280,16 @@ public class StanMagazyn extends Stan {
                     return;
                 }
                 int old = baza.getProduktIlosc(selectedRow);
-                
+
                 if (old < ile) {
                     JOptionPane.showMessageDialog(panel, "Podana ilość nie może być większa od aktualnej ilości", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                
+
                 ile = old - ile;
-                
+
                 baza.setProduktIlosc(selectedRow, ile);
-                
+
                 model.setValueAt(ile, selectedRow, 3);
             }
         });
@@ -251,14 +321,14 @@ public class StanMagazyn extends Stan {
         });
 
         pBot.add(btnDel);
-        
+
         FlowLayout experimentLayout = new FlowLayout();
         pBot.setLayout(experimentLayout);
         experimentLayout.setAlignment(FlowLayout.LEADING);
 
         //Left to right component orientation is selected by default
         pBot.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        
+
         p.add(pBot, BorderLayout.PAGE_END);
 
         p.validate();

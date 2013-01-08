@@ -30,6 +30,7 @@ public class DodajProduktOkno extends JDialog {
     public JComboBox vat;
     JDialog okno;
     public Boolean dodane;
+    public JButton dodaj;
 
     public DodajProduktOkno() {
 
@@ -79,7 +80,7 @@ public class DodajProduktOkno extends JDialog {
         panel.add(l);
         panel.add(vat);
 
-        JButton dodaj = new JButton("Dodaj");
+        dodaj = new JButton("Dodaj");
         JButton anuluj = new JButton("Anuluj");
 
         dodaj.addActionListener(new ActionListener() {
@@ -134,8 +135,9 @@ public class DodajProduktOkno extends JDialog {
             }
         });
 
-        panel.add(dodaj);
+        
         panel.add(anuluj);
+        panel.add(dodaj);
         
         
         
