@@ -17,4 +17,26 @@ public class OsobaPrywatna extends Klient {
         imie = _imie;
         nazwisko = _nazwisko;        
     }
+    
+    @Override
+    public String getNazwa() {
+        return "Os. pryw:" + nazwisko + " " + imie;
+    }
+
+    public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+    
 }

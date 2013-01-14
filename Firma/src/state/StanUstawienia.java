@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import okienka.KategorieOkno;
+import okienka.KlientOkno;
 
 /**
  *
@@ -80,6 +81,20 @@ public class StanUstawienia extends Stan {
         });
 
         p.add(btnCat);
+        
+        JButton btnClient = new JButton("Klienci");
+
+        btnClient.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {             
+                
+                KlientOkno okno = new KlientOkno();
+                okno.setLocationRelativeTo(panel);
+                okno.setVisible(true);
+            }
+        });
+
+        p.add(btnClient);
         
         //Left to right component orientation is selected by default
         p.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);

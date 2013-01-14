@@ -131,4 +131,28 @@ public class MyDB implements Interface {
         
         return false;
     }
+    
+    public void addKlientFirma(String nazwa, String adres, String kod, String miejscowosc, String telefon, String nip, String regon) {
+        int klientID = nextKlientID;
+        nextKlientID++;
+        listaKlienci.add(new Firma(klientID,nazwa,adres,kod,miejscowosc,telefon,nip,regon));
+    }
+    
+    public void addKlientOsobaPrywatna(String imie, String nazwisko, String adres, String kod, String miejscowosc, String telefon, String nip) {
+        int klientID = nextKlientID;
+        nextKlientID++;
+        listaKlienci.add(new OsobaPrywatna(klientID,imie,nazwisko,adres,kod,miejscowosc,telefon,nip));
+    }
+    
+    public Klient getKlient(int nr) {
+        return listaKlienci.get(nr);
+    }
+    
+    public ArrayList<Klient> getKlienci() {
+        return listaKlienci;
+    }
+    
+    public void removeKlient(int id) {
+        listaKlienci.remove(id);
+    }
 }

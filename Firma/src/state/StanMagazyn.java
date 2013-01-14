@@ -198,14 +198,6 @@ public class StanMagazyn extends Stan {
                     model.setValueAt(cenaV, selectedRow, 7);
                     model.setValueAt(cenaEV, selectedRow, 8);
 
-
-                    /*baza.addProdukt(okno.nazwa.getText(),
-                     baza.getKategoria(okno.kategoria.getSelectedIndex()),
-                     Integer.parseInt(okno.ilosc.getText()),
-                     Float.parseFloat(okno.cena.getText()),
-                     cenaE,
-                     Float.parseFloat((String) okno.vat.getSelectedItem()) / 100);
-                     model.addRow(baza.getLastProdukt());*/
                 }
             }
         });

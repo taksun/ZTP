@@ -12,9 +12,31 @@ public class Firma extends Klient {
     private String nazwa;
     private String regon;
     
-    public Firma(int id, String _nazwa, String _regon, String _adres, String _kod, String _miejscowosc, String _telefon, String _nip) {
+    public Firma(int id, String _nazwa, String _adres, String _kod, String _miejscowosc, String _telefon, String _nip, String _regon) {
         super(id,_adres,_kod,_miejscowosc,_telefon,_nip);
         nazwa = _nazwa;
         regon = _regon;        
     }
+    
+    @Override
+    public String getNazwa() {
+        return "Firma: "+nazwa;
+    }
+    
+    public String getNazwa2() {
+        return nazwa;
+    }
+    
+    public void setNazwa(String n) {
+        nazwa = n;
+    }
+
+    public String getRegon() {
+        return regon;
+    }
+
+    public void setRegon(String regon) {
+        this.regon = regon;
+    }
+    
 }
