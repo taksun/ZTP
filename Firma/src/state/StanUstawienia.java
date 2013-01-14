@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import okienka.KategorieOkno;
 
 /**
  *
@@ -24,8 +25,12 @@ public class StanUstawienia extends Stan {
     
     JTextField kurs;
     
+    JPanel panel;
+    
     @Override
     public void setPanel(JPanel p) {
+        
+        panel = p;
         
         p.removeAll();
         
@@ -61,6 +66,20 @@ public class StanUstawienia extends Stan {
         });
 
         p.add(btnEdit);
+        
+        JButton btnCat = new JButton("Kategorie");
+
+        btnCat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {             
+                
+                KategorieOkno okno = new KategorieOkno();
+                okno.setLocationRelativeTo(panel);
+                okno.setVisible(true);
+            }
+        });
+
+        p.add(btnCat);
         
         //Left to right component orientation is selected by default
         p.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);

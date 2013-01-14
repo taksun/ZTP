@@ -81,22 +81,11 @@ public class MyDB implements Interface {
     }
 
     public void removeKategoria(int id) {
-        for (Kategoria k : listaKategorie) {
-            if (k.getID() == id) {
-                listaKategorie.remove(k);
-
-                break;
-            }
-        }
+        listaKategorie.remove(id);
     }
 
     public void editKategoria(int id, String nazwa) {
-        for (Kategoria k : listaKategorie) {
-            if (k.getID() == id) {
-                k.setNazwa(nazwa);
-                break;
-            }
-        }
+        listaKategorie.get(id).setNazwa(nazwa);
     }
     
     public Kategoria getKategoriaByID(int id) {
@@ -122,8 +111,24 @@ public class MyDB implements Interface {
     public int getKategoria(int id) {
         return listaKategorie.get(id).getID();
     }
+    
+    public String getKategoriaName(int id) {
+        return listaKategorie.get(id).getNazwa();
+    }
 
     public ArrayList<Kategoria> getKategorie() {
         return listaKategorie;
+    }
+    
+    public boolean isKategoriaUsed(int nr) {
+        int id = listaKategorie.get(nr).getID();
+        
+        for (Produkt p: listaProdukty) {
+            if (p.getKategoria()==id) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
