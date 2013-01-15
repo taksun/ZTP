@@ -15,8 +15,8 @@ public class Zamowienie {
    
     private int zamID;
     private Date data;
-    private String status;// nie wiem czy tak, bo w sumie chyba mozna inta i zrobic 0-niezrealizowane, 1-czeka,2-zrealizowane.. dokładnie nie wiem
-    private ArrayList<Produkt> produkty = new ArrayList<>();
+    private String status;
+    private ArrayList<Produkt> produkty;
     private int klientID;
 
     public Zamowienie(int zID, String s, ArrayList<Produkt> p, int k) {
@@ -31,7 +31,28 @@ public class Zamowienie {
         return zamID;
     }
     
+    public int getKlientID() {
+        return klientID;
+    }
+    
+    public ArrayList<Produkt> getProdukty() {
+        return produkty;
+    }
+    
+    public void setProdukty(ArrayList<Produkt> p) {
+        produkty = p;
+    }
+    
+    public void setKlientID(int id) {
+        klientID = id;
+    }
+    
     public void setStatus(String s) {
         status = s;
+    }
+    
+    public Object[] toTable() {
+        Object[] tab = {zamID, data, status, klientID};
+        return tab;
     }
 }

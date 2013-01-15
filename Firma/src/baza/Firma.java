@@ -39,4 +39,8 @@ public class Firma extends Klient {
         this.regon = regon;
     }
     
+    @Override
+    public String toString() {
+        return this.getNazwa();
+    }
 }

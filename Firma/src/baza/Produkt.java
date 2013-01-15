@@ -17,6 +17,16 @@ public class Produkt {
     private int ilosc;
     private String nazwa;
     private float vat;
+    
+    public Produkt(Produkt p) {
+        produktID = p.getID();
+        kategoriaID = p.getKategoria();
+        cena = p.getCena();
+        cena_euro = p.getCena_euro();
+        ilosc = p.getIlosc();
+        nazwa = p.getNazwa();
+        vat = p.getVAT();
+    }
 
     public Produkt(int pID, String n, int kID, float c, float ce, int i, float v) {
         produktID = pID;
@@ -76,6 +86,10 @@ public class Produkt {
         vat = v;
     }
 
+    public float getCena_euro() {
+        return cena_euro;
+    }
+
     public Object[] toTable() {
         MyDB baza = MyDB.getInstance();
         float cenaV = cena * vat + cena;
@@ -88,5 +102,10 @@ public class Produkt {
         cenaEV = cenaEV / 100;
         Object[] tab = {produktID, nazwa, baza.getKategoriaByID(kategoriaID).getNazwa(), ilosc, cena, cena_euro, Integer.toString((int) (vat * 100)) + "%", cenaV, cenaEV};
         return tab;
+    }
+    
+    @Override
+    public String toString() {
+        return Integer.toString(produktID) + ": " +nazwa;
     }
 }

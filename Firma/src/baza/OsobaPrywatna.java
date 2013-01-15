@@ -39,4 +39,8 @@ public class OsobaPrywatna extends Klient {
         this.nazwisko = nazwisko;
     }
     
+    @Override
+    public String toString() {
+        return this.getNazwa();
+    }
 }
