@@ -99,8 +99,8 @@ public class StanZamowienia extends Stan {
                 okno.setVisible(true);
 
                 if (okno.dodane) {
-                    
-                    baza.addZamowienie(baza.getKlientID(okno.klient.getSelectedIndex()),okno.produkty);
+
+                    baza.addZamowienie(baza.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
                     model.addRow(baza.getLastZamowienie());
                 }
             }
@@ -125,9 +125,9 @@ public class StanZamowienia extends Stan {
 
                 okno.setTitle("Edytuj zamówienie nr: " + Integer.toString(z.getID()));
                 okno.dodaj.setText("Zapisz");
-                
+
                 okno.klient.setSelectedIndex(baza.getKlientRowByID(baza.getZamowienie(selectedRow).getKlientID()));
-                
+
 
                 okno.setLocationRelativeTo(panel);
                 okno.setVisible(true);
@@ -141,6 +141,36 @@ public class StanZamowienia extends Stan {
         });
 
         pBot.add(btnEdit);
+
+        JButton btnStatus = new JButton("Zmień status");
+
+        btnStatus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedRow < 0) {
+                    JOptionPane.showMessageDialog(panel, "Nie wybraleś zamówienia!", "Brak wybranego zamówienia", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                Object[] possibilities = {"Nowe", "W trakcie realizacji", "Zrealizowane"};
+                String s = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Wybierz status zamówienia",
+                        "Zmiana statusu",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        possibilities,
+                        baza.getZamowienie(selectedRow).getStatus());
+
+                if ((s != null) && (s.length() > 0)) {
+                    baza.getZamowienie(selectedRow).setStatus(s);
+                    model.setValueAt(s, selectedRow, 2);
+                }
+            }
+        });
+
+        pBot.add(btnStatus);
 
         JButton btnDel = new JButton("Usuń");
 

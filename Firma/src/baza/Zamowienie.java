@@ -35,6 +35,10 @@ public class Zamowienie {
         return klientID;
     }
     
+    public String getStatus() {
+        return status;
+    }
+    
     public ArrayList<Produkt> getProdukty() {
         return produkty;
     }
