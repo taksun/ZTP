@@ -18,6 +18,7 @@ public class Zamowienie {
     private String status;
     private ArrayList<Produkt> produkty;
     private int klientID;
+    private int fakID;
 
     public Zamowienie(int zID, String s, ArrayList<Produkt> p, int k) {
         zamID = zID;
@@ -25,6 +26,7 @@ public class Zamowienie {
         status = s;
         produkty  = p;
         klientID = k;
+        fakID = 0;
     }
     
     public int getID() {
@@ -42,6 +44,10 @@ public class Zamowienie {
     public ArrayList<Produkt> getProdukty() {
         return produkty;
     }
+
+    public int getFakID() {
+        return fakID;
+    }
     
     public void setProdukty(ArrayList<Produkt> p) {
         produkty = p;
@@ -54,9 +60,18 @@ public class Zamowienie {
     public void setStatus(String s) {
         status = s;
     }
+
+    public void setFakID(int fakID) {
+        this.fakID = fakID;
+    }
     
     public Object[] toTable() {
         Object[] tab = {zamID, data, status, klientID};
         return tab;
+    }
+    
+    @Override
+    public String toString() {
+        return "Zamówienie nr: " + zamID;
     }
 }

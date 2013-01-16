@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -42,6 +43,13 @@ public class StanZamowienia extends Stan {
         p.removeAll();
 
         p.setLayout(new BorderLayout());
+        
+        JPanel pTop = new JPanel();
+        JLabel lbl = new JLabel("Zamowienia");
+        
+        pTop.add(lbl);
+        
+        p.add(pTop, BorderLayout.PAGE_START);
 
         String[] col = {"ID",
             "Data",

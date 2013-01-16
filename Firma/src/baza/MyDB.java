@@ -17,10 +17,12 @@ public class MyDB implements Interface {
     private int nextProduktID = 1;
     private int nextKlientID = 1;
     private int nextZamowienieID = 1;
+    private int nextFakturaID = 1;
     private ArrayList<Produkt> listaProdukty = new ArrayList<>();
     private ArrayList<Kategoria> listaKategorie = new ArrayList<>();
     private ArrayList<Klient> listaKlienci = new ArrayList<>();
     private ArrayList<Zamowienie> listaZamowienia = new ArrayList<>();
+    private ArrayList<Faktura> listaFaktury = new ArrayList<>();
 
     private MyDB() {
     }
@@ -181,6 +183,10 @@ public class MyDB implements Interface {
     public Zamowienie getZamowienie(int id) {
         return listaZamowienia.get(id);
     }
+    
+    public int getZamowienieID(int id) {
+        return listaZamowienia.get(id).getID();
+    }
 
     public Object[][] getZamowienia() {
         Object[][] data = new Object[listaZamowienia.size()][6];
@@ -191,6 +197,18 @@ public class MyDB implements Interface {
 
         return data;
     }
+    
+    public ArrayList<Zamowienie> getZamowieniaBezFaktur() {
+        ArrayList<Zamowienie> al = new ArrayList<>();
+        
+        for (Zamowienie z: listaZamowienia) {
+            if (z.getFakID()==0) {
+                al.add(z);
+            }
+        }
+        
+        return al;
+    }
 
     public void removeZamowienie(int id) {
         listaZamowienia.remove(id);
@@ -198,5 +216,29 @@ public class MyDB implements Interface {
 
     public Object[] getLastZamowienie() {
         return listaZamowienia.get(listaZamowienia.size() - 1).toTable();
+    }
+    
+    public void addFaktura(int id) {
+        Faktura f = new Faktura(nextFakturaID, id);
+        nextFakturaID++;
+        listaFaktury.add(f);
+    }
+    
+    public Faktura getFaktura(int id) {
+        return listaFaktury.get(id);
+    }
+    
+    public Object[][] getFaktury() {
+        Object[][] data = new Object[listaFaktury.size()][6];
+
+        for (int i = 0; i < listaFaktury.size(); i++) {
+            data[i] = listaFaktury.get(i).toTable();
+        }
+
+        return data;
+    }
+    
+    public Object[] getLastFaktura() {
+        return listaFaktury.get(listaFaktury.size() - 1).toTable();
     }
 }

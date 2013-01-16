@@ -54,6 +54,8 @@ public class Window extends javax.swing.JFrame {
         baza.addKategoria("Kategoria1");
         baza.addKategoria("Kategoria2");
         baza.addKategoria("Kategoria3");
+        baza.addKlientFirma("asd", "asd", "asd", "asd", "asd", "asd", "asd");
+        baza.addKlientOsobaPrywatna("a", "a", "a", "a", "a", "a", "a");
 
         getContentPane().add(panel, BorderLayout.CENTER);
         c.setPanel(panel);
