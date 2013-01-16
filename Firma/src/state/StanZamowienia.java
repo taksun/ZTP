@@ -6,6 +6,7 @@ package state;
 
 import baza.MyDB;
 import baza.Produkt;
+import baza.Proxy;
 import baza.Zamowienie;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
@@ -32,7 +33,7 @@ import okienka.DodajZamowienieOkno;
 public class StanZamowienia extends Stan {
 
     int selectedRow = -1;
-    MyDB baza = MyDB.getInstance();
+    Proxy prox = new Proxy();
     JPanel panel;
 
     @Override
@@ -56,7 +57,7 @@ public class StanZamowienia extends Stan {
             "Status",
             "Klient"};
 
-        Object[][] data = baza.getZamowienia();
+        Object[][] data = prox.getZamowienia();
 
         final DefaultTableModel model = new DefaultTableModel(data, col);
 
@@ -107,9 +108,12 @@ public class StanZamowienia extends Stan {
                 okno.setVisible(true);
 
                 if (okno.dodane) {
+                    
+                    prox.addZamowienie(prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
+                    model.addRow(prox.getLastZamowienie());
 
-                    baza.addZamowienie(baza.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
-                    model.addRow(baza.getLastZamowienie());
+                    //baza.addZamowienie(baza.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
+                    //model.addRow(baza.getLastZamowienie());
                 }
             }
         });
@@ -127,14 +131,14 @@ public class StanZamowienia extends Stan {
                     return;
                 }
 
-                Zamowienie z = baza.getZamowienie(selectedRow);
+                Zamowienie z = prox.getZamowienie(selectedRow);
 
-                DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<>(baza.getZamowienie(selectedRow).getProdukty()));
+                DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<>(z.getProdukty()));
 
                 okno.setTitle("Edytuj zamówienie nr: " + Integer.toString(z.getID()));
                 okno.dodaj.setText("Zapisz");
 
-                okno.klient.setSelectedIndex(baza.getKlientRowByID(baza.getZamowienie(selectedRow).getKlientID()));
+                okno.klient.setSelectedIndex(prox.getKlientRowByID(z.getKlientID()));
 
 
                 okno.setLocationRelativeTo(panel);
@@ -142,8 +146,8 @@ public class StanZamowienia extends Stan {
 
                 if (okno.dodane) {
                     z.setProdukty(okno.produkty);
-                    z.setKlientID(baza.getKlientID(okno.klient.getSelectedIndex()));
-                    model.setValueAt(baza.getKlientID(okno.klient.getSelectedIndex()), selectedRow, 3);
+                    z.setKlientID(prox.getKlientID(okno.klient.getSelectedIndex()));
+                    model.setValueAt(prox.getKlientID(okno.klient.getSelectedIndex()), selectedRow, 3);
                 }
             }
         });
@@ -169,10 +173,10 @@ public class StanZamowienia extends Stan {
                         JOptionPane.PLAIN_MESSAGE,
                         null,
                         possibilities,
-                        baza.getZamowienie(selectedRow).getStatus());
+                        prox.getZamowienie(selectedRow).getStatus());
 
                 if ((s != null) && (s.length() > 0)) {
-                    baza.getZamowienie(selectedRow).setStatus(s);
+                    prox.getZamowienie(selectedRow).setStatus(s);
                     model.setValueAt(s, selectedRow, 2);
                 }
             }
@@ -198,7 +202,7 @@ public class StanZamowienia extends Stan {
                         JOptionPane.YES_NO_OPTION);
 
                 if (n == JOptionPane.YES_OPTION) {
-                    baza.removeZamowienie(selectedRow);
+                    prox.removeZamowienie(selectedRow);
                     model.removeRow(selectedRow);
                 }
             }

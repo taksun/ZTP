@@ -152,10 +152,12 @@ public class MyDB implements Interface {
         return listaKlienci.get(nr);
     }
 
+    @Override
     public int getKlientID(int nr) {
         return listaKlienci.get(nr).getID();
     }
     
+    @Override
     public int getKlientRowByID(int id) {
         for (int i = 0; i < listaKlienci.size(); i++) {
             if (listaKlienci.get(i).getID() == id) {
@@ -174,12 +176,14 @@ public class MyDB implements Interface {
         listaKlienci.remove(id);
     }
 
+    @Override
     public void addZamowienie(int klientID, ArrayList<Produkt> produkty) {
         Zamowienie z = new Zamowienie(nextZamowienieID, "Nowe", produkty, klientID);
         nextZamowienieID++;
         listaZamowienia.add(z);
     }
 
+    @Override
     public Zamowienie getZamowienie(int id) {
         return listaZamowienia.get(id);
     }
@@ -188,6 +192,7 @@ public class MyDB implements Interface {
         return listaZamowienia.get(id).getID();
     }
 
+    @Override
     public Object[][] getZamowienia() {
         Object[][] data = new Object[listaZamowienia.size()][6];
 
@@ -210,10 +215,12 @@ public class MyDB implements Interface {
         return al;
     }
 
+    @Override
     public void removeZamowienie(int id) {
         listaZamowienia.remove(id);
     }
 
+    @Override
     public Object[] getLastZamowienie() {
         return listaZamowienia.get(listaZamowienia.size() - 1).toTable();
     }
