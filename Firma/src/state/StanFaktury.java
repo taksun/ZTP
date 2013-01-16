@@ -4,7 +4,11 @@
  */
 package state;
 
+import baza.Faktura;
 import baza.MyDB;
+import builder.HTMLBuilder;
+import builder.PDFBuilder;
+import builder.Writer;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
@@ -138,6 +142,46 @@ public class StanFaktury extends Stan {
         });
 
         pBot.add(btnStatus);
+        
+        JButton btnBuildPDF = new JButton("Utworz PDF");
+
+        btnBuildPDF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedRow < 0) {
+                    JOptionPane.showMessageDialog(panel, "Nie wybraleś faktury!", "Brak wybranej faktury", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                Faktura f = baza.getFaktura(selectedRow);
+                Writer w = new Writer(new PDFBuilder("Faktura nr " + Integer.toString(f.getID())));
+                w.construct(f);
+
+            }
+        });
+
+        pBot.add(btnBuildPDF);
+        
+        JButton btnBuildHTML = new JButton("Utworz HTML");
+
+        btnBuildHTML.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedRow < 0) {
+                    JOptionPane.showMessageDialog(panel, "Nie wybraleś faktury!", "Brak wybranej faktury", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                Faktura f = baza.getFaktura(selectedRow);
+                Writer w = new Writer(new HTMLBuilder("Faktura nr " + Integer.toString(f.getID())));
+                w.construct(f);
+
+            }
+        });
+
+        pBot.add(btnBuildHTML);
 
         JButton btnDel = new JButton("Usuń");
 

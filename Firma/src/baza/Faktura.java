@@ -31,4 +31,12 @@ public class Faktura {
     public void changeOplacone() {
         oplacona = !oplacona;
     }
+
+    public int getID() {
+        return fakID;
+    }
+    
+    public String getDate() {
+        return data.toString();
+    }
 }

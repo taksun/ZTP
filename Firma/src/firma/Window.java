@@ -5,6 +5,7 @@
 package firma;
 
 import baza.MyDB;
+import baza.Produkt;
 import java.awt.BorderLayout;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -13,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import state.Chain;
 import state.StanFaktury;
@@ -56,6 +58,11 @@ public class Window extends javax.swing.JFrame {
         baza.addKategoria("Kategoria3");
         baza.addKlientFirma("asd", "asd", "asd", "asd", "asd", "asd", "asd");
         baza.addKlientOsobaPrywatna("a", "a", "a", "a", "a", "a", "a");
+        ArrayList<Produkt> al = new ArrayList<>();
+        al.add(new Produkt(baza.getProdukt(0)));
+        baza.addZamowienie(1, al);
+        baza.addFaktura(1);
+        baza.getZamowienie(0).setFakID(1);
 
         getContentPane().add(panel, BorderLayout.CENTER);
         c.setPanel(panel);

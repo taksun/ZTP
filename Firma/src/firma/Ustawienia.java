@@ -11,7 +11,15 @@ package firma;
 public class Ustawienia {
 
     private float kurs_euro;
+    private String miejscowosc = "Bialystok";
+    private String nazwa = "Nasza piekna firma";
+    private String kod = "15-001";
+    private String adres = "ul. Wiejska 45A";
+    private String nip = "1234567890";
+    private String regon = "987654321";
+    
     private static Ustawienia singleton;
+    
     private Observer obs = new Observer(this);
 
     private Ustawienia() {
@@ -40,6 +48,30 @@ public class Ustawienia {
 
     public float getKurs() {
         return kurs_euro;
+    }
+    
+    public String getMiejscowosc() {
+        return miejscowosc;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public String getKod() {
+        return kod;
+    }
+
+    public String getAdres() {
+        return adres;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public String getRegon() {
+        return regon;
     }
     
     private void notyfy() {
