@@ -53,25 +53,13 @@ public class Ustawienia {
     public String getMiejscowosc() {
         return miejscowosc;
     }
-
+    
     public String getNazwa() {
         return nazwa;
     }
-
-    public String getKod() {
-        return kod;
-    }
-
-    public String getAdres() {
-        return adres;
-    }
-
-    public String getNip() {
-        return nip;
-    }
-
-    public String getRegon() {
-        return regon;
+    
+    public String getDaneFirmy() {
+        return adres + "\n" + kod + " " + miejscowosc + "\nNIP: " + nip + "  Regon: " + regon;
     }
     
     private void notyfy() {

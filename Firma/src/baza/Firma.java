@@ -20,7 +20,7 @@ public class Firma extends Klient {
     
     @Override
     public String getNazwa() {
-        return "Firma: "+nazwa;
+        return nazwa;
     }
     
     public String getNazwa2() {

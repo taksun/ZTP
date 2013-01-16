@@ -151,6 +151,16 @@ public class MyDB implements Interface {
     public Klient getKlient(int nr) {
         return listaKlienci.get(nr);
     }
+    
+    public Klient getKlientByID(int id) {
+        for (Klient k : listaKlienci) {
+            if (k.getID() == id) {
+                return k;
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public int getKlientID(int nr) {
@@ -186,6 +196,16 @@ public class MyDB implements Interface {
     @Override
     public Zamowienie getZamowienie(int id) {
         return listaZamowienia.get(id);
+    }
+    
+    public Zamowienie getZamowienieByID(int id) {
+        for (Zamowienie z : listaZamowienia) {
+            if (z.getID() == id) {
+                return z;
+            }
+        }
+
+        return null;
     }
     
     public int getZamowienieID(int id) {

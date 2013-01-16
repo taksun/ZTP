@@ -35,6 +35,10 @@ public class Faktura {
     public int getID() {
         return fakID;
     }
+
+    public int getZamID() {
+        return zamID;
+    }
     
     public String getDate() {
         return data.toString();

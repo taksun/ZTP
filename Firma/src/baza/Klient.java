@@ -32,6 +32,10 @@ public class Klient {
     public String getNazwa() {
         return "";
     }
+    
+    public String getDane() {
+        return adres + "\n" + kod + " " + miejscowosc + "\n" + "NIP: " + nip;
+    }
 
     public String getAdres() {
         return adres;

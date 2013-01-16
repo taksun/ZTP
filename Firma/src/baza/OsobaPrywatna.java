@@ -20,7 +20,7 @@ public class OsobaPrywatna extends Klient {
     
     @Override
     public String getNazwa() {
-        return "Os. pryw:" + nazwisko + " " + imie;
+        return nazwisko + " " + imie;
     }
 
     public String getImie() {
