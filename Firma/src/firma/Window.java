@@ -9,6 +9,7 @@ import baza.Produkt;
 import java.awt.BorderLayout;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,10 +50,16 @@ public class Window extends javax.swing.JFrame {
         } catch (IOException | ClassNotFoundException exc) {
         }
 
+        File file = new File("./faktury");
+
+        if (!file.exists()) {
+            (new File("./faktury")).mkdir();
+        }
+
         MyDB baza = MyDB.getInstance();
-        baza.addProdukt("asd", 1, 100, 100F, 100F*ust.getKurs(), 0.23F);
-        baza.addProdukt("asd2", 1, 100, 100F, 100F*ust.getKurs(), 0.23F);
-        baza.addProdukt("asd3", 1, 100, 100F, 100F*ust.getKurs(), 0.23F);
+        baza.addProdukt("asd", 1, 100, 100F, 100F * ust.getKurs(), 0.23F);
+        baza.addProdukt("asd2", 1, 100, 100F, 100F * ust.getKurs(), 0.23F);
+        baza.addProdukt("asd3", 1, 100, 100F, 100F * ust.getKurs(), 0.23F);
         baza.addKategoria("Kategoria1");
         baza.addKategoria("Kategoria2");
         baza.addKategoria("Kategoria3");
