@@ -4,13 +4,14 @@
  */
 package baza;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author taksun
  */
-public class Faktura {
+public class Faktura implements Serializable {
     private int fakID;
     private Date data;
     private int zamID;

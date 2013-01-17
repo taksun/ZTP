@@ -4,11 +4,13 @@
  */
 package baza;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Karolina
  */
-public class Kategoria {
+public class Kategoria implements Serializable {
     
     private int kategoriaID;
     private String nazwa;

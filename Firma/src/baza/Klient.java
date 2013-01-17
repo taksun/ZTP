@@ -4,11 +4,13 @@
  */
 package baza;
 
+import java.io.Serializable;
+
 /**
  *
  * @author taksun
  */
-public class Klient {
+public class Klient implements Serializable {
     private int klientID;
     private String adres;
     private String kod;

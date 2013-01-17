@@ -4,6 +4,13 @@
  */
 package baza;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -267,5 +274,69 @@ public class MyDB implements Interface {
     
     public Object[] getLastFaktura() {
         return listaFaktury.get(listaFaktury.size() - 1).toTable();
+    }
+    
+    public void save() throws FileNotFoundException, IOException {
+        File f = new File("./baza/produkty.db");
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(listaProdukty);
+        }
+        
+        f = new File("./baza/kategorie.db");
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(listaKategorie);
+        }
+        
+        f = new File("./baza/klienci.db");
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(listaKlienci);
+        }
+        
+        f = new File("./baza/zamowienia.db");
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(listaZamowienia);
+        }
+        
+        f = new File("./baza/faktury.db");
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(listaFaktury);
+        }
+    }
+    
+    public void load() throws FileNotFoundException, IOException, ClassNotFoundException {
+        File f = new File("./baza/produkty.db");
+        try (FileInputStream fis = new FileInputStream(f)) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            listaProdukty = (ArrayList<Produkt>)ois.readObject();
+        }
+        
+        f = new File("./baza/kategorie.db");
+        try (FileInputStream fis = new FileInputStream(f)) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            listaKategorie = (ArrayList<Kategoria>)ois.readObject();
+        }
+        
+        f = new File("./baza/klienci.db");
+        try (FileInputStream fis = new FileInputStream(f)) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            listaKlienci = (ArrayList<Klient>)ois.readObject();
+        }
+        
+        f = new File("./baza/zamowienia.db");
+        try (FileInputStream fis = new FileInputStream(f)) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            listaZamowienia = (ArrayList<Zamowienie>)ois.readObject();
+        }
+        
+        f = new File("./baza/faktury.db");
+        try (FileInputStream fis = new FileInputStream(f)) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            listaFaktury = (ArrayList<Faktura>)ois.readObject();
+        }
     }
 }

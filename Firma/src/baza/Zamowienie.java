@@ -4,6 +4,7 @@
  */
 package baza;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  *
  * @author Karolina
  */
-public class Zamowienie {
+public class Zamowienie implements Serializable {
    
     private int zamID;
     private Date data;

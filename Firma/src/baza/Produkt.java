@@ -4,11 +4,13 @@
  */
 package baza;
 
+import java.io.Serializable;
+
 /**
  *
  * @author taksun
  */
-public class Produkt {
+public class Produkt implements Serializable {
 
     private int produktID;
     private int kategoriaID;
