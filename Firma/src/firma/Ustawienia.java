@@ -18,7 +18,7 @@ public class Ustawienia {
     private String nip;
     private String regon;
     private static Ustawienia singleton;
-    private Observer obs = new Observer(this);
+    private Observer obs = new ObserverKurs(this);
 
     private Ustawienia() {
     }
