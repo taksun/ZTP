@@ -4,9 +4,9 @@
  */
 package okienka;
 
+import baza.Klient;
 import baza.MyDB;
 import baza.Produkt;
-import baza.Proxy;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +40,7 @@ public class DodajZamowienieOkno extends JDialog {
     public JComboBox klient;
     JDialog okno;
     public Boolean dodane;
+    public Boolean error;
     public JButton dodaj;
 
     public DodajZamowienieOkno(ArrayList<Produkt> p, ArrayList<Produkt> pold) {
@@ -50,6 +51,7 @@ public class DodajZamowienieOkno extends JDialog {
         okno = this;
 
         dodane = false;
+        error = false;
 
         setTitle("Dodaj zamowienie");
         setModal(true);
@@ -62,7 +64,16 @@ public class DodajZamowienieOkno extends JDialog {
 
         JPanel kpanel = new JPanel();
         JLabel l = new JLabel("Klient", JLabel.TRAILING);
-        klient = new JComboBox<>(baza.getKlienci().toArray());
+        
+        ArrayList<Klient> al = baza.getKlienci();
+        
+        if (al.isEmpty()) {
+            JOptionPane.showMessageDialog(okno, "Przejdz do ustawień i dodaj klienta", "Brak klienta", JOptionPane.WARNING_MESSAGE);
+            error = true;
+            return;
+        }
+        
+        klient = new JComboBox<>(al.toArray());
         l.setLabelFor(klient);
         kpanel.add(l);
         kpanel.add(klient);
@@ -132,6 +143,11 @@ public class DodajZamowienieOkno extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DodajZamowienieProduktOkno pokno = new DodajZamowienieProduktOkno(produkty);
+                
+                if (pokno.error) {
+                    return;
+                }
+                
                 pokno.setLocationRelativeTo(okno);
                 pokno.setVisible(true);
 
@@ -158,6 +174,10 @@ public class DodajZamowienieOkno extends JDialog {
                 }
                 
                 String s = JOptionPane.showInputDialog(null, "Podaj nową ilość", "Ustawienie ilości", JOptionPane.PLAIN_MESSAGE);
+                
+                if (s==null) {
+                    return;
+                }
                 
                 if (s.equals("")) {
                     JOptionPane.showMessageDialog(okno, "Nie podałeś ilości produktu", "Brak ilości", JOptionPane.WARNING_MESSAGE);

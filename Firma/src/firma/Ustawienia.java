@@ -11,15 +11,13 @@ package firma;
 public class Ustawienia {
 
     private float kurs_euro;
-    private String miejscowosc = "Bialystok";
-    private String nazwa = "Nasza piekna firma";
-    private String kod = "15-001";
-    private String adres = "ul. Wiejska 45A";
-    private String nip = "1234567890";
-    private String regon = "987654321";
-    
+    private String miejscowosc;
+    private String nazwa;
+    private String kod;
+    private String adres;
+    private String nip;
+    private String regon;
     private static Ustawienia singleton;
-    
     private Observer obs = new Observer(this);
 
     private Ustawienia() {
@@ -33,11 +31,18 @@ public class Ustawienia {
     }
 
     public Memento stworzMemento() {
-        return new MementoUstawien().setKurs(kurs_euro);
+        return new MementoUstawien().setDane(kurs_euro, miejscowosc, nazwa, kod, adres, nip, regon);
     }
 
     public void przywroc(Memento m) {
-        kurs_euro = ((MementoUstawien) m).getKurs();
+        MementoUstawien mem = (MementoUstawien) m;
+        kurs_euro = mem.getKurs();
+        miejscowosc = mem.getMiejscowosc();
+        nazwa = mem.getNazwa();
+        kod = mem.getKod();
+        adres = mem.getAdres();
+        nip = mem.getNip();
+        regon = mem.getRegon();
     }
 
     public void setKurs(float k) {
@@ -49,19 +54,55 @@ public class Ustawienia {
     public float getKurs() {
         return kurs_euro;
     }
-    
+
     public String getMiejscowosc() {
         return miejscowosc;
     }
-    
+
     public String getNazwa() {
         return nazwa;
     }
-    
+
+    public String getKod() {
+        return kod;
+    }
+
+    public String getAdres() {
+        return adres;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public String getRegon() {
+        return regon;
+    }
+
+    public void setMiejscowosc(String miejscowosc) {
+        this.miejscowosc = miejscowosc;
+    }
+
+    public void setKod(String kod) {
+        this.kod = kod;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
+    }
+
+    public void setNip(String nip) {
+        this.nip = nip;
+    }
+
+    public void setRegon(String regon) {
+        this.regon = regon;
+    }
+
     public String getDaneFirmy() {
         return adres + "\n" + kod + " " + miejscowosc + "\nNIP: " + nip + "  Regon: " + regon;
     }
-    
+
     private void notyfy() {
         obs.update();
     }
@@ -69,14 +110,51 @@ public class Ustawienia {
     private static class MementoUstawien implements Memento {
 
         private float kurs;
+        private String miejscowosc;
+        private String nazwa;
+        private String kod;
+        private String adres;
+        private String nip;
+        private String regon;
 
-        Memento setKurs(float k) {
+        Memento setDane(float k, String msc, String n, String ko, String a, String ni, String r) {
             kurs = k;
+            miejscowosc = msc;
+            nazwa = n;
+            kod = ko;
+            adres = a;
+            nip = ni;
+            regon = r;
             return this;
         }
 
         public float getKurs() {
             return kurs;
         }
+
+        public String getMiejscowosc() {
+            return miejscowosc;
+        }
+
+        public String getNazwa() {
+            return nazwa;
+        }
+
+        public String getKod() {
+            return kod;
+        }
+
+        public String getAdres() {
+            return adres;
+        }
+
+        public String getNip() {
+            return nip;
+        }
+
+        public String getRegon() {
+            return regon;
+        }
+        
     }
 }

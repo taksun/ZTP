@@ -42,12 +42,12 @@ public class StanMagazyn extends Stan {
         p.removeAll();
 
         p.setLayout(new BorderLayout());
-        
+
         JPanel pTop = new JPanel();
         JLabel lbl = new JLabel("Magazyn");
-        
+
         pTop.add(lbl);
-        
+
         p.add(pTop, BorderLayout.PAGE_START);
 
         String[] col = {"ID",
@@ -110,6 +110,11 @@ public class StanMagazyn extends Stan {
             public void actionPerformed(ActionEvent e) {
 
                 DodajProduktOkno okno = new DodajProduktOkno();
+
+                if (okno.error) {
+                    return;
+                }
+                
                 okno.setLocationRelativeTo(panel);
                 okno.setVisible(true);
 

@@ -67,9 +67,9 @@ public class Window extends javax.swing.JFrame {
         try {
             baza.load();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -165,11 +165,11 @@ public class Window extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 319, Short.MAX_VALUE)
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-716)/2, (screenSize.height-339)/2, 716, 339);
+        setBounds((screenSize.width-700)/2, (screenSize.height-400)/2, 700, 400);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

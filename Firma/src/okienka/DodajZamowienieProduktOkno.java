@@ -34,6 +34,7 @@ public class DodajZamowienieProduktOkno extends JDialog {
     MyDB baza = MyDB.getInstance();
     
     public Boolean dodane;
+    public Boolean error;
     
     public JButton dodaj;
 
@@ -44,6 +45,7 @@ public class DodajZamowienieProduktOkno extends JDialog {
         okno = this;
 
         dodane = false;
+        error = false;
 
         setTitle("Dodaj produkt");
         setModal(true);
@@ -54,7 +56,16 @@ public class DodajZamowienieProduktOkno extends JDialog {
         JPanel panel = new JPanel(layout);
 
         JLabel l = new JLabel("Produkt", JLabel.TRAILING);
-        produkt = new JComboBox<>(baza.getProduktyAL().toArray());
+        
+        ArrayList<Produkt> al = baza.getProduktyAL();
+        
+        if (al.isEmpty()) {
+            JOptionPane.showMessageDialog(okno, "Przejdz do magazynu i dodaj produkt", "Brak produktu", JOptionPane.WARNING_MESSAGE);
+            error = true;
+            return;
+        }
+                
+        produkt = new JComboBox<>(al.toArray());
         l.setLabelFor(produkt);
         panel.add(l);
         panel.add(produkt);

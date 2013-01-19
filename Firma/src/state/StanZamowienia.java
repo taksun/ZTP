@@ -103,6 +103,11 @@ public class StanZamowienia extends Stan {
             public void actionPerformed(ActionEvent e) {
 
                 DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<Produkt>(),new ArrayList<Produkt>());
+                
+                if (okno.error) {
+                    return;
+                }
+                
                 okno.setLocationRelativeTo(panel);
                 okno.setVisible(true);
 

@@ -4,10 +4,12 @@
  */
 package okienka;
 
+import baza.Kategoria;
 import baza.MyDB;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -30,6 +32,7 @@ public class DodajProduktOkno extends JDialog {
     public JComboBox vat;
     JDialog okno;
     public Boolean dodane;
+    public Boolean error;
     public JButton dodaj;
 
     public DodajProduktOkno() {
@@ -37,6 +40,7 @@ public class DodajProduktOkno extends JDialog {
         okno = this;
 
         dodane = false;
+        error = false;
 
         MyDB baza = MyDB.getInstance();
 
@@ -45,7 +49,7 @@ public class DodajProduktOkno extends JDialog {
         setSize(200, 250);
 
         SpringLayout layout = new SpringLayout();
-        
+
         JPanel panel = new JPanel(layout);
 
         JLabel l = new JLabel("Nazwa", JLabel.TRAILING);
@@ -54,8 +58,16 @@ public class DodajProduktOkno extends JDialog {
         panel.add(l);
         panel.add(nazwa);
 
+        ArrayList<Kategoria> al = baza.getKategorie();
+
+        if (al.isEmpty()) {
+            JOptionPane.showMessageDialog(okno, "Przejdz do ustawień i dodaj kategorię", "Brak kategorii", JOptionPane.WARNING_MESSAGE);
+            error = true;
+            return;
+        }
+
         l = new JLabel("Kategoria", JLabel.TRAILING);
-        kategoria = new JComboBox<>(baza.getKategorie().toArray());
+        kategoria = new JComboBox<>(al.toArray());
         l.setLabelFor(kategoria);
         panel.add(l);
         panel.add(kategoria);
@@ -115,7 +127,7 @@ public class DodajProduktOkno extends JDialog {
                     cena.setText(text);
                     Float c = Float.parseFloat(cena.getText());
                     c = c * 100;
-                    c = (float)Math.round(c);
+                    c = (float) Math.round(c);
                     c = c / 100;
                     cena.setText(Float.toString(c));
                 } catch (Exception exc) {
@@ -135,16 +147,16 @@ public class DodajProduktOkno extends JDialog {
             }
         });
 
-        
+
         panel.add(anuluj);
         panel.add(dodaj);
-        
-        
-        
+
+
+
         SpringUtilities.makeCompactGrid(panel,
-                                6, 2, //rows, cols
-                                6, 6,        //initX, initY
-                                6, 6);       //xPad, yPad
+                6, 2, //rows, cols
+                6, 6, //initX, initY
+                6, 6);       //xPad, yPad
 
         getContentPane().add(BorderLayout.CENTER, panel);
     }
