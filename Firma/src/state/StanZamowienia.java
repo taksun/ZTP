@@ -109,11 +109,14 @@ public class StanZamowienia extends Stan {
 
                 if (okno.dodane) {
                     
+                    for(Produkt p : okno.produkty) {
+                        Produkt prod = prox.getProduktByID(p.getID());
+                        prod.setIlosc(prod.getIlosc()-p.getIlosc());
+                    }
+                    
                     prox.addZamowienie(prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
                     model.addRow(prox.getLastZamowienie());
 
-                    //baza.addZamowienie(baza.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
-                    //model.addRow(baza.getLastZamowienie());
                 }
             }
         });

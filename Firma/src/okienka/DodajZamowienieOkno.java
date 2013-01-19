@@ -128,7 +128,7 @@ public class DodajZamowienieOkno extends JDialog {
         pdodaj.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DodajZamowienieProduktOkno pokno = new DodajZamowienieProduktOkno();
+                DodajZamowienieProduktOkno pokno = new DodajZamowienieProduktOkno(produkty);
                 pokno.setLocationRelativeTo(okno);
                 pokno.setVisible(true);
 
@@ -171,6 +171,13 @@ public class DodajZamowienieOkno extends JDialog {
                 
                 if (l<1) {
                     JOptionPane.showMessageDialog(okno, "Podana ilość musi być większa od 0", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                int iWb=baza.getProduktIloscByID(produkty.get(selectedRow).getID());
+                
+                if (iWb<l) {
+                    JOptionPane.showMessageDialog(okno, "Podana ilość jest za duża. W bazie jest tylko "+iWb+" wybranego produktu.", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 

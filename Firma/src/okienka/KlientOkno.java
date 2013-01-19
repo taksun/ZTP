@@ -5,7 +5,6 @@
 package okienka;
 
 import baza.Firma;
-import baza.Kategoria;
 import baza.Klient;
 import baza.MyDB;
 import baza.OsobaPrywatna;
@@ -64,12 +63,12 @@ public class KlientOkno extends JDialog {
                 if (okno.dodane) {
                     if (okno.firma.isSelected()) {
                         baza.addKlientFirma(okno.nazwa.getText(), okno.adres.getText(), okno.kod.getText(), okno.miejscowosc.getText(), okno.telefon.getText(), okno.nip.getText(), okno.regon.getText());
-                        model.addElement("Firma: " + okno.nazwa.getText());
+                        model.addElement(okno.nazwa.getText());
                     }
 
                     if (okno.ospryw.isSelected()) {
                         baza.addKlientOsobaPrywatna(okno.imie.getText(), okno.nazwisko.getText(), okno.adres.getText(), okno.kod.getText(), okno.miejscowosc.getText(), okno.telefon.getText(), okno.nip.getText());
-                        model.addElement("Os pryw: " + okno.nazwisko.getText() + " " + okno.nazwisko.getText());
+                        model.addElement(okno.nazwisko.getText() + " " + okno.imie.getText());
                     }
                 }
             }

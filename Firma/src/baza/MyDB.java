@@ -54,6 +54,15 @@ public class MyDB implements Interface {
     public int getProduktIlosc(int id) {
         return listaProdukty.get(id).getIlosc();
     }
+    
+    public int getProduktIloscByID(int id) {
+        for (Produkt p: listaProdukty) {
+            if (p.getID()==id) {
+                return p.getIlosc();
+            }
+        }
+        return 0;
+    }
 
     public void setProduktIlosc(int id, int ilosc) {
         listaProdukty.get(id).setIlosc(ilosc);
@@ -65,6 +74,16 @@ public class MyDB implements Interface {
 
     public Produkt getProdukt(int id) {
         return listaProdukty.get(id);
+    }
+    
+    @Override
+    public Produkt getProduktByID(int id) {
+        for (Produkt p: listaProdukty) {
+            if (p.getID()==id) {
+                return p;
+            }
+        }
+        return null;
     }
     
     public ArrayList<Produkt> getProduktyAL() {
@@ -313,30 +332,60 @@ public class MyDB implements Interface {
         try (FileInputStream fis = new FileInputStream(f)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             listaProdukty = (ArrayList<Produkt>)ois.readObject();
+            
+            for (Produkt p : listaProdukty) {
+                if (nextProduktID <= p.getID()) {
+                    nextProduktID = p.getID()+1;
+                }
+            }
         }
         
         f = new File("./baza/kategorie.db");
         try (FileInputStream fis = new FileInputStream(f)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             listaKategorie = (ArrayList<Kategoria>)ois.readObject();
+            
+            for (Kategoria item : listaKategorie) {
+                if (nextKategoriaID <= item.getID()) {
+                    nextKategoriaID = item.getID()+1;
+                }
+            }
         }
         
         f = new File("./baza/klienci.db");
         try (FileInputStream fis = new FileInputStream(f)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             listaKlienci = (ArrayList<Klient>)ois.readObject();
+            
+            for (Klient item : listaKlienci) {
+                if (nextKlientID <= item.getID()) {
+                    nextKlientID = item.getID()+1;
+                }
+            }
         }
         
         f = new File("./baza/zamowienia.db");
         try (FileInputStream fis = new FileInputStream(f)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             listaZamowienia = (ArrayList<Zamowienie>)ois.readObject();
+            
+            for (Zamowienie item : listaZamowienia) {
+                if (nextZamowienieID <= item.getID()) {
+                    nextZamowienieID = item.getID()+1;
+                }
+            }
         }
         
         f = new File("./baza/faktury.db");
         try (FileInputStream fis = new FileInputStream(f)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             listaFaktury = (ArrayList<Faktura>)ois.readObject();
+            
+            for (Faktura item : listaFaktury) {
+                if (nextFakturaID <= item.getID()) {
+                    nextFakturaID = item.getID()+1;
+                }
+            }
         }
     }
 }

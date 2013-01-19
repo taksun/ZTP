@@ -5,9 +5,11 @@
 package okienka;
 
 import baza.MyDB;
+import baza.Produkt;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -27,17 +29,21 @@ public class DodajZamowienieProduktOkno extends JDialog {
     public JComboBox produkt;
     JDialog okno;
     
+    public ArrayList<Produkt> produkty;
+    
+    MyDB baza = MyDB.getInstance();
+    
     public Boolean dodane;
     
     public JButton dodaj;
 
-    public DodajZamowienieProduktOkno() {
+    public DodajZamowienieProduktOkno(ArrayList<Produkt> p) {
+        
+        produkty = p;
 
         okno = this;
 
         dodane = false;
-
-        MyDB baza = MyDB.getInstance();
 
         setTitle("Dodaj produkt");
         setModal(true);
@@ -66,16 +72,31 @@ public class DodajZamowienieProduktOkno extends JDialog {
         dodaj.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
+                for(Produkt p: produkty) {
+                    if (p.getID()==baza.getProdukt(produkt.getSelectedIndex()).getID()) {
+                        JOptionPane.showMessageDialog(okno, "Wybrany produkt został już dodany do zamówienia.", "Produkt zostal juz dodany", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                }
 
                 if (ilosc.getText().equals("")) {
                     JOptionPane.showMessageDialog(okno, "Nie podałeś ilości produktu", "Brak ilości", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
+                int l = 0;
                 try {
-                    int l = Integer.parseInt(ilosc.getText());
+                    l = Integer.parseInt(ilosc.getText());
                 } catch (Exception exc) {
                     JOptionPane.showMessageDialog(okno, "Podana ilość nie jest liczbą", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                int iWb=baza.getProduktIlosc(produkt.getSelectedIndex());
+                
+                if (iWb<l) {
+                    JOptionPane.showMessageDialog(okno, "Podana ilość jest za duża. W bazie jest tylko "+iWb+" wybranego produktu.", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 

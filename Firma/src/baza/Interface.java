@@ -18,4 +18,5 @@ public interface Interface {
     public Zamowienie getZamowienie(int id);
     public void removeZamowienie(int id);
     public int getKlientRowByID(int id);
+    public Produkt getProduktByID(int id);
 }

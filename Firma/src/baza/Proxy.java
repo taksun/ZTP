@@ -51,4 +51,9 @@ public class Proxy implements Interface {
     public int getKlientRowByID(int id) {
         return baza.getKlientRowByID(id);
     }
+
+    @Override
+    public Produkt getProduktByID(int id) {
+        return baza.getProduktByID(id);
+    }
 }
