@@ -67,7 +67,8 @@ public class Zamowienie implements Serializable {
     }
     
     public Object[] toTable() {
-        Object[] tab = {zamID, data, status, klientID};
+        MyDB baza = MyDB.getInstance();
+        Object[] tab = {zamID, data, status, baza.getKlientByID(klientID)};
         return tab;
     }
     
