@@ -5,7 +5,6 @@
 package firma;
 
 import baza.MyDB;
-import baza.Produkt;
 import java.awt.BorderLayout;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -16,7 +15,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -68,19 +66,6 @@ public class Window extends javax.swing.JFrame {
         MyDB baza = MyDB.getInstance();
         try {
             baza.load();
-            /*baza.addProdukt("asd", 1, 100, 100F, 100F * ust.getKurs(), 0.23F);
-            baza.addProdukt("asd2", 1, 100, 100F, 100F * ust.getKurs(), 0.23F);
-            baza.addProdukt("asd3", 1, 100, 100F, 100F * ust.getKurs(), 0.23F);
-            baza.addKategoria("Kategoria1");
-            baza.addKategoria("Kategoria2");
-            baza.addKategoria("Kategoria3");
-            baza.addKlientFirma("asd", "asd", "asd", "asd", "asd", "asd", "asd");
-            baza.addKlientOsobaPrywatna("a", "a", "a", "a", "a", "a", "a");
-            ArrayList<Produkt> al = new ArrayList<>();
-            al.add(new Produkt(baza.getProdukt(0)));
-            baza.addZamowienie(1, al);
-            baza.addFaktura(1);
-            baza.getZamowienie(0).setFakID(1);*/
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ClassNotFoundException ex) {
@@ -201,6 +186,7 @@ public class Window extends javax.swing.JFrame {
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
         panel.setSize(this.getContentPane().getWidth(), this.getContentPane().getHeight());
+        validate();
     }//GEN-LAST:event_formComponentResized
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
