@@ -19,14 +19,14 @@ public class Proxy implements Interface {
     }
 
     @Override
-    public void addZamowienie(int klientID, ArrayList<Produkt> produkty) {
+    public void addZamowienie(int klientID, ArrayList<Produkt> produkty, boolean e) {
 
         for (Produkt p : produkty) {
             Produkt prod = baza.getProduktByID(p.getID());
             prod.setIlosc(prod.getIlosc() - p.getIlosc());
         }
 
-        baza.addZamowienie(klientID, produkty);
+        baza.addZamowienie(klientID, produkty, e);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Proxy implements Interface {
     }
 
     @Override
-    public void editZamowienie(int id, int klientID, ArrayList<Produkt> produkty) {
+    public void editZamowienie(int id, int klientID, ArrayList<Produkt> produkty, boolean e) {
 
         Zamowienie z = baza.getZamowienieByID(id);
 
@@ -87,6 +87,11 @@ public class Proxy implements Interface {
             prod.setIlosc(prod.getIlosc() - p.getIlosc());
         }
 
-        baza.editZamowienie(id, klientID, produkty);
+        baza.editZamowienie(id, klientID, produkty, e);
+    }
+
+    @Override
+    public Klient getKlient(int nr) {
+        return baza.getKlient(nr);
     }
 }

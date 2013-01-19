@@ -100,64 +100,84 @@ public class HTMLBuilder implements Builder {
 
     @Override
     public void buildBody() {
-        page.append("<tr>"
-                + "<td>"
-                + "<table id='produkty'>"
-                + "<tr>"
-                + "<td class='smallFont' align='center'>Lp.</td>"
-                + "<td class='smallFont' align='center'>Nazwa towaru/uslugi</td>"
-                + "<td class='smallFont' align='center'>Stawka<br />VAT</td>"
-                + "<td class='smallFont' align='center'>Ilosc</td>"
-                + "<td class='smallFont' align='center'>Cena<br />jednostkowa<br />bez podatku<br />[z.gr]</td>"
-                + "<td class='smallFont' align='center'>Wartosc<br />bez podatku<br />[z.gr]</td>"
-                + "<td class='smallFont' align='center'>Kwota<br />VAT</td>"
-                + "<td class='smallFont' align='center'>Wartosc<br />z podatkiem<br />[z.gr]</td>"
+        String waluta = "z.gr";
+        if (z.isEuro()) {
+            waluta = "Euro";
+        }
+        page.append("<tr>" + "<td>" + "<table id='produkty'>" + "<tr>" + "<td class='smallFont' align='center'>Lp.</td>" + "<td class='smallFont' align='center'>Nazwa towaru/uslugi</td>" + "<td class='smallFont' align='center'>Stawka<br />VAT</td>" + "<td class='smallFont' align='center'>Ilosc</td>" + "<td class='smallFont' align='center'>Cena<br />jednostkowa<br />bez podatku<br />[").append(waluta).append("]</td>" + "<td class='smallFont' align='center'>Wartosc<br />bez podatku<br />[").append(waluta).append("]</td>" + "<td class='smallFont' align='center'>Kwota<br />VAT</td>" + "<td class='smallFont' align='center'>Wartosc<br />z podatkiem<br />[").append(waluta).append("]</td>"
                 + "</tr>");
-        
+
         float suma = 0.0F;
         float sumavat = 0.0F;
-        
+
         for (Produkt item : z.getProdukty()) {
             page.append("<tr><td align='right'>");
             page.append(Integer.toString(item.getID()));
             page.append("</td><td style='width: 400px'>");
             page.append(item.getNazwa());
             page.append("</td><td align='center'>");
-            
+
             float vat = item.getVAT();
-            
+
             page.append(Integer.toString((int) (vat * 100))).append("%");
             page.append("</td><td align='right'>");
-            
+
             int ilosc = item.getIlosc();
-            
+
             page.append(Integer.toString(ilosc));
             page.append("</td><td align='right'>");
-            
-            float cena = item.getCena();
-            
+
+            float cena;
+
+            if (z.isEuro()) {
+                cena = item.getCena_euro();
+            } else {
+                cena = item.getCena();
+            }
+
             page.append(Float.toString(cena));
             page.append("</td><td align='right'>");
-            
+
             float cenarazem = cena * ilosc;
+            cenarazem *= 100;
+            cenarazem = Math.round(cenarazem);
+            cenarazem /= 100;
+            
             suma += cenarazem;
-                    
+
             page.append(Float.toString(cenarazem));
             page.append("</td><td align='right'>");
-            
+
             vat = cenarazem * vat;
+            
+            vat *= 100;
+            vat = Math.round(vat);
+            vat /= 100;
 
             sumavat += vat;
-            
+
             page.append(Float.toString(vat));
             page.append("</td><td align='right'>");
-            page.append(Float.toString(cenarazem + vat));
+            
+            float cenazvat = cenarazem + vat;
+
+            cenazvat *= 100;
+            cenazvat = Math.round(cenazvat);
+            cenazvat /= 100;
+            
+            page.append(Float.toString(cenazvat));
             page.append("</td><tr>");
         }
         
-        page.append("<tr>" + "<td colspan='4' style='border: 0px;'></td>" + "<td align='right' style='border: 0px;'>Razem:</td>" + "<td align='right'>").append(Float.toString(suma)).append("</td>" + "<td align='right'>").append(Float.toString(sumavat)).append("</td>" + "<td align='right'>").append(Float.toString(suma + sumavat)).append("</td>"
+        float cenazvat = suma + sumavat;
+
+        cenazvat *= 100;
+        cenazvat = Math.round(cenazvat);
+        cenazvat /= 100;
+
+        page.append("<tr>" + "<td colspan='4' style='border: 0px;'></td>" + "<td align='right' style='border: 0px;'>Razem:</td>" + "<td align='right'>").append(Float.toString(suma)).append("</td>" + "<td align='right'>").append(Float.toString(sumavat)).append("</td>" + "<td align='right'>").append(Float.toString(cenazvat)).append("</td>"
                 + "</td>");
-        
+
         page.append("</table>"
                 + "</td>"
                 + "</tr>");
@@ -165,7 +185,7 @@ public class HTMLBuilder implements Builder {
 
     @Override
     public void buildFoot() {
-        
+
         page.append("<tr>"
                 + "<td>"
                 + "<table id='podpisy'>"
@@ -176,7 +196,7 @@ public class HTMLBuilder implements Builder {
                 + "</table>"
                 + "</td>"
                 + "</td>");
-        
+
         page.append("</table>"
                 + "</body>"
                 + "</html>");

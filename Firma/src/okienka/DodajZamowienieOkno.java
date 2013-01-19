@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -38,6 +39,7 @@ public class DodajZamowienieOkno extends JDialog {
     public ArrayList<Produkt> produkty;
     public ArrayList<Produkt> produktyOld;
     public JComboBox klient;
+    public JCheckBox euro;
     JDialog okno;
     public Boolean dodane;
     public Boolean error;
@@ -79,6 +81,11 @@ public class DodajZamowienieOkno extends JDialog {
         kpanel.add(klient);
 
         panel.add(kpanel);
+        
+        JPanel pcheck = new JPanel();    
+        euro = new JCheckBox("Cena w euro");
+        pcheck.add(euro);
+        panel.add(pcheck);
 
         String[] col = {"ID",
             "Nazwa",

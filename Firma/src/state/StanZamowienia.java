@@ -43,18 +43,19 @@ public class StanZamowienia extends Stan {
         p.removeAll();
 
         p.setLayout(new BorderLayout());
-        
+
         JPanel pTop = new JPanel();
         JLabel lbl = new JLabel("Zamowienia");
-        
+
         pTop.add(lbl);
-        
+
         p.add(pTop, BorderLayout.PAGE_START);
 
         String[] col = {"ID",
             "Data",
             "Status",
-            "Klient"};
+            "Klient",
+            "Cena w euro"};
 
         Object[][] data = prox.getZamowienia();
 
@@ -102,18 +103,18 @@ public class StanZamowienia extends Stan {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<Produkt>(),new ArrayList<Produkt>());
-                
+                DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<Produkt>(), new ArrayList<Produkt>());
+
                 if (okno.error) {
                     return;
                 }
-                
+
                 okno.setLocationRelativeTo(panel);
                 okno.setVisible(true);
 
                 if (okno.dodane) {
-                    
-                    prox.addZamowienie(prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
+
+                    prox.addZamowienie(prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty, okno.euro.isSelected());
                     model.addRow(prox.getLastZamowienie());
 
                 }
@@ -134,10 +135,10 @@ public class StanZamowienia extends Stan {
                 }
 
                 Zamowienie z = prox.getZamowienie(selectedRow);
-                
+
                 ArrayList<Produkt> al = new ArrayList<>();
-                
-                for (Produkt item: z.getProdukty()) {
+
+                for (Produkt item : z.getProdukty()) {
                     al.add(new Produkt(item));
                 }
 
@@ -147,14 +148,19 @@ public class StanZamowienia extends Stan {
                 okno.dodaj.setText("Zapisz");
 
                 okno.klient.setSelectedIndex(prox.getKlientRowByID(z.getKlientID()));
-
+                okno.euro.setSelected(z.isEuro());
 
                 okno.setLocationRelativeTo(panel);
                 okno.setVisible(true);
 
                 if (okno.dodane) {
-                    prox.editZamowienie(z.getID(), prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
-                    model.setValueAt(prox.getKlientID(okno.klient.getSelectedIndex()), selectedRow, 3);
+                    prox.editZamowienie(z.getID(), prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty, okno.euro.isSelected());
+                    model.setValueAt(prox.getKlient(okno.klient.getSelectedIndex()), selectedRow, 3);
+                    String c = "Nie";
+                    if (okno.euro.isSelected()) {
+                        c = "Tak";
+                    }
+                    model.setValueAt(c, selectedRow, 4);
                 }
             }
         });

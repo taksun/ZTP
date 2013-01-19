@@ -182,6 +182,7 @@ public class MyDB implements Interface {
         listaKlienci.add(new OsobaPrywatna(klientID, imie, nazwisko, adres, kod, miejscowosc, telefon, nip));
     }
 
+    @Override
     public Klient getKlient(int nr) {
         return listaKlienci.get(nr);
     }
@@ -221,8 +222,8 @@ public class MyDB implements Interface {
     }
 
     @Override
-    public void addZamowienie(int klientID, ArrayList<Produkt> produkty) {
-        Zamowienie z = new Zamowienie(nextZamowienieID, "Nowe", produkty, klientID);
+    public void addZamowienie(int klientID, ArrayList<Produkt> produkty, boolean e) {
+        Zamowienie z = new Zamowienie(nextZamowienieID, "Nowe", produkty, klientID, e);
         nextZamowienieID++;
         listaZamowienia.add(z);
     }
@@ -270,10 +271,11 @@ public class MyDB implements Interface {
     }
     
     @Override
-    public void editZamowienie(int id, int klientID, ArrayList<Produkt> produkty) {
+    public void editZamowienie(int id, int klientID, ArrayList<Produkt> produkty, boolean e) {
         Zamowienie z = this.getZamowienieByID(id);
         z.setKlientID(klientID);
         z.setProdukty(produkty);
+        z.setCenawEuro(e);
     }
 
     @Override

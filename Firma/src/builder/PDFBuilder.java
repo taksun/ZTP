@@ -156,13 +156,18 @@ public class PDFBuilder implements Builder {
 
         t.addCell(c3);
 
-        PdfPCell c4 = new PdfPCell(new Phrase("Cena jednostkowa \nbez podatku \n[zł.gr]", SmallFont));
+        String waluta = "z.gr";
+        if (z.isEuro()) {
+            waluta = "Euro";
+        }
+
+        PdfPCell c4 = new PdfPCell(new Phrase("Cena jednostkowa \nbez podatku \n[" + waluta + "]", SmallFont));
         c4.setHorizontalAlignment(Element.ALIGN_CENTER);
         c4.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
         t.addCell(c4);
 
-        PdfPCell c5 = new PdfPCell(new Phrase("Wartosc \nbez podatku \n[zł.gr]", SmallFont));
+        PdfPCell c5 = new PdfPCell(new Phrase("Wartosc \nbez podatku \n[" + waluta + "]", SmallFont));
         c5.setHorizontalAlignment(Element.ALIGN_CENTER);
         c5.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
@@ -174,7 +179,7 @@ public class PDFBuilder implements Builder {
 
         t.addCell(c7);
 
-        PdfPCell c8 = new PdfPCell(new Phrase("Wartosc \nz podatkiem \n[zł.gr]", SmallFont));
+        PdfPCell c8 = new PdfPCell(new Phrase("Wartosc \nz podatkiem \n[" + waluta + "]", SmallFont));
         c8.setHorizontalAlignment(Element.ALIGN_CENTER);
         c8.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
@@ -203,13 +208,23 @@ public class PDFBuilder implements Builder {
             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             t.addCell(cell);
 
-            float cena = item.getCena();
+            float cena;
+
+            if (z.isEuro()) {
+                cena = item.getCena_euro();
+            } else {
+                cena = item.getCena();
+            }
 
             cell = new PdfPCell(new Phrase(Float.toString(cena), NormalFont));
             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             t.addCell(cell);
 
             float cenarazem = cena * ilosc;
+            cenarazem *= 100;
+            cenarazem = Math.round(cenarazem);
+            cenarazem /= 100;
+            
             suma += cenarazem;
 
             cell = new PdfPCell(new Phrase(Float.toString(cenarazem), NormalFont));
@@ -218,13 +233,23 @@ public class PDFBuilder implements Builder {
 
             vat = cenarazem * vat;
 
+            vat *= 100;
+            vat = Math.round(vat);
+            vat /= 100;
+
             sumavat += vat;
 
             cell = new PdfPCell(new Phrase(Float.toString(vat), NormalFont));
             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             t.addCell(cell);
 
-            cell = new PdfPCell(new Phrase(Float.toString(cenarazem + vat), NormalFont));
+            float cenazvat = cenarazem + vat;
+
+            cenazvat *= 100;
+            cenazvat = Math.round(cenazvat);
+            cenazvat /= 100;
+
+            cell = new PdfPCell(new Phrase(Float.toString(cenazvat), NormalFont));
             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             t.addCell(cell);
         }
@@ -248,7 +273,13 @@ public class PDFBuilder implements Builder {
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         t.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(Float.toString(suma + sumavat), NormalFont));
+        float cenazvat = suma + sumavat;
+
+        cenazvat *= 100;
+        cenazvat = Math.round(cenazvat);
+        cenazvat /= 100;
+
+        cell = new PdfPCell(new Phrase(Float.toString(cenazvat), NormalFont));
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         t.addCell(cell);
 
@@ -264,9 +295,9 @@ public class PDFBuilder implements Builder {
         PdfPTable t = new PdfPTable(3);
 
         t.setWidthPercentage(90);
-        
+
         t.setSpacingBefore(100);
-        
+
         t.getDefaultCell().setBorder(0);
 
         float[] szerokosci = {300f, 100f, 300f,};
@@ -294,17 +325,17 @@ public class PDFBuilder implements Builder {
         c3.setBorder(0);
         c3.addElement(ls);
         t.addCell(c3);
-        
+
         PdfPCell cell = new PdfPCell(new Phrase("podpis osoby uprawnionej do odbioru faktury VAT", SmallFont));
         cell.setBorder(0);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         t.addCell(cell);
-        
+
         cell = new PdfPCell(new Phrase("", SmallFont));
         cell.setBorder(0);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         t.addCell(cell);
-        
+
         cell = new PdfPCell(new Phrase("podpis osoby uprawnionej do wystawienia faktury VAT", SmallFont));
         cell.setBorder(0);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);

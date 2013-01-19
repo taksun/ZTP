@@ -44,12 +44,12 @@ public class StanFaktury extends Stan {
         p.removeAll();
 
         p.setLayout(new BorderLayout());
-        
+
         JPanel pTop = new JPanel();
         JLabel lbl = new JLabel("Faktury");
-        
+
         pTop.add(lbl);
-        
+
         p.add(pTop, BorderLayout.PAGE_START);
 
         String[] col = {"ID",
@@ -136,13 +136,17 @@ public class StanFaktury extends Stan {
                 }
 
                 baza.getFaktura(selectedRow).changeOplacone();
-                model.setValueAt(!(boolean) model.getValueAt(selectedRow, 3), selectedRow, 3);
+                String c = "Nie";
+                if (baza.getFaktura(selectedRow).isOplacona()) {
+                    c = "Tak";
+                }
+                model.setValueAt(c, selectedRow, 3);
 
             }
         });
 
         pBot.add(btnStatus);
-        
+
         JButton btnBuildPDF = new JButton("Utworz PDF");
 
         btnBuildPDF.addActionListener(new ActionListener() {
@@ -162,7 +166,7 @@ public class StanFaktury extends Stan {
         });
 
         pBot.add(btnBuildPDF);
-        
+
         JButton btnBuildHTML = new JButton("Utworz HTML");
 
         btnBuildHTML.addActionListener(new ActionListener() {

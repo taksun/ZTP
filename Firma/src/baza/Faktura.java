@@ -25,8 +25,16 @@ public class Faktura implements Serializable {
     }
     
     public Object[] toTable() {
-        Object[] tab = {fakID, data, zamID, oplacona};
+        String c = "Nie";
+        if (oplacona) {
+            c = "Tak";
+        }
+        Object[] tab = {fakID, data, zamID, c};
         return tab;
+    }
+
+    public boolean isOplacona() {
+        return oplacona;
     }
     
     public void changeOplacone() {
