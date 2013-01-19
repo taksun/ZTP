@@ -6,6 +6,7 @@ package okienka;
 
 import baza.MyDB;
 import baza.Produkt;
+import baza.Proxy;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,14 +36,16 @@ public class DodajZamowienieOkno extends JDialog {
     MyDB baza = MyDB.getInstance();
     
     public ArrayList<Produkt> produkty;
+    public ArrayList<Produkt> produktyOld;
     public JComboBox klient;
     JDialog okno;
     public Boolean dodane;
     public JButton dodaj;
 
-    public DodajZamowienieOkno(ArrayList<Produkt> p) {
+    public DodajZamowienieOkno(ArrayList<Produkt> p, ArrayList<Produkt> pold) {
         
         produkty = p;
+        produktyOld = pold;
 
         okno = this;
 
@@ -176,10 +179,18 @@ public class DodajZamowienieOkno extends JDialog {
                 
                 int iWb=baza.getProduktIloscByID(produkty.get(selectedRow).getID());
                 
+                for (Produkt item: produktyOld) {
+                    if (item.getID()==produkty.get(selectedRow).getID()) {
+                        iWb+=item.getIlosc();
+                        break;
+                    }
+                }
+                
                 if (iWb<l) {
                     JOptionPane.showMessageDialog(okno, "Podana ilość jest za duża. W bazie jest tylko "+iWb+" wybranego produktu.", "Błędna ilość", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
+                
                 
                 produkty.get(selectedRow).setIlosc(l);
                 model.setValueAt(l, selectedRow, 3);

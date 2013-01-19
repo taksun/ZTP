@@ -19,4 +19,5 @@ public interface Interface {
     public void removeZamowienie(int id);
     public int getKlientRowByID(int id);
     public Produkt getProduktByID(int id);
+    public void editZamowienie(int id, int klientID, ArrayList<Produkt> produkty);
 }

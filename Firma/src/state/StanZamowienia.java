@@ -4,7 +4,6 @@
  */
 package state;
 
-import baza.MyDB;
 import baza.Produkt;
 import baza.Proxy;
 import baza.Zamowienie;
@@ -103,16 +102,11 @@ public class StanZamowienia extends Stan {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<Produkt>());
+                DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<Produkt>(),new ArrayList<Produkt>());
                 okno.setLocationRelativeTo(panel);
                 okno.setVisible(true);
 
                 if (okno.dodane) {
-                    
-                    for(Produkt p : okno.produkty) {
-                        Produkt prod = prox.getProduktByID(p.getID());
-                        prod.setIlosc(prod.getIlosc()-p.getIlosc());
-                    }
                     
                     prox.addZamowienie(prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
                     model.addRow(prox.getLastZamowienie());
@@ -135,8 +129,14 @@ public class StanZamowienia extends Stan {
                 }
 
                 Zamowienie z = prox.getZamowienie(selectedRow);
+                
+                ArrayList<Produkt> al = new ArrayList<>();
+                
+                for (Produkt item: z.getProdukty()) {
+                    al.add(new Produkt(item));
+                }
 
-                DodajZamowienieOkno okno = new DodajZamowienieOkno(new ArrayList<>(z.getProdukty()));
+                DodajZamowienieOkno okno = new DodajZamowienieOkno(al, z.getProdukty());
 
                 okno.setTitle("Edytuj zamówienie nr: " + Integer.toString(z.getID()));
                 okno.dodaj.setText("Zapisz");
@@ -148,8 +148,7 @@ public class StanZamowienia extends Stan {
                 okno.setVisible(true);
 
                 if (okno.dodane) {
-                    z.setProdukty(okno.produkty);
-                    z.setKlientID(prox.getKlientID(okno.klient.getSelectedIndex()));
+                    prox.editZamowienie(z.getID(), prox.getKlientID(okno.klient.getSelectedIndex()), okno.produkty);
                     model.setValueAt(prox.getKlientID(okno.klient.getSelectedIndex()), selectedRow, 3);
                 }
             }

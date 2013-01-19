@@ -11,14 +11,21 @@ import java.util.ArrayList;
  * @author taksun
  */
 public class Proxy implements Interface {
+
     private MyDB baza;
-    
+
     public Proxy() {
         baza = MyDB.getInstance();
     }
 
     @Override
     public void addZamowienie(int klientID, ArrayList<Produkt> produkty) {
+
+        for (Produkt p : produkty) {
+            Produkt prod = baza.getProduktByID(p.getID());
+            prod.setIlosc(prod.getIlosc() - p.getIlosc());
+        }
+
         baza.addZamowienie(klientID, produkty);
     }
 
@@ -44,6 +51,15 @@ public class Proxy implements Interface {
 
     @Override
     public void removeZamowienie(int id) {
+
+        Zamowienie z = baza.getZamowienie(id);
+
+        if (!z.getStatus().equals("Zrealizowane")) {
+            for (Produkt item : z.getProdukty()) {
+                baza.setProduktIloscByID(item.getID(), baza.getProduktIloscByID(item.getID()) + item.getIlosc());
+            }
+        }
+
         baza.removeZamowienie(id);
     }
 
@@ -55,5 +71,22 @@ public class Proxy implements Interface {
     @Override
     public Produkt getProduktByID(int id) {
         return baza.getProduktByID(id);
+    }
+
+    @Override
+    public void editZamowienie(int id, int klientID, ArrayList<Produkt> produkty) {
+
+        Zamowienie z = baza.getZamowienieByID(id);
+
+        for (Produkt item : z.getProdukty()) {
+            baza.setProduktIloscByID(item.getID(), baza.getProduktIloscByID(item.getID()) + item.getIlosc());
+        }
+
+        for (Produkt p : produkty) {
+            Produkt prod = baza.getProduktByID(p.getID());
+            prod.setIlosc(prod.getIlosc() - p.getIlosc());
+        }
+
+        baza.editZamowienie(id, klientID, produkty);
     }
 }

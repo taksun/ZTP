@@ -67,6 +67,14 @@ public class MyDB implements Interface {
     public void setProduktIlosc(int id, int ilosc) {
         listaProdukty.get(id).setIlosc(ilosc);
     }
+    
+    public void setProduktIloscByID(int id, int ilosc) {
+        for (Produkt p: listaProdukty) {
+            if (p.getID()==id) {
+                p.setIlosc(ilosc);
+            }
+        }
+    }
 
     public Object[] getLastProdukt() {
         return listaProdukty.get(listaProdukty.size() - 1).toTable();
@@ -259,6 +267,13 @@ public class MyDB implements Interface {
         }
         
         return al;
+    }
+    
+    @Override
+    public void editZamowienie(int id, int klientID, ArrayList<Produkt> produkty) {
+        Zamowienie z = this.getZamowienieByID(id);
+        z.setKlientID(klientID);
+        z.setProdukty(produkty);
     }
 
     @Override
